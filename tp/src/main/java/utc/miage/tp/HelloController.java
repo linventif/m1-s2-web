@@ -1,4 +1,4 @@
-package utc.miage.tp.tp2;
+package utc.miage.tp;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

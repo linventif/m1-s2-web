@@ -1,4 +1,4 @@
-package utc.miage.tp.tp1;
+package utc.miage.tp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
