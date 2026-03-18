@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservations</title>
+</head>
+<body>
+    <main>
+        <h1>Reservations en cours</h1>
+        <p class="intro">Chaque reservation affiche le nombre de personnes, un visuel de la region, le mode de paiement et un bouton d'annulation.</p>
+
+        <div class="notice" th:if="${cancelled}">
+            La reservation a ete annulee. Vous etes revenu sur la liste complete.
+        </div>
+
+        <div class="empty" th:if="${#lists.isEmpty(reservations)}">
+            Aucune reservation disponible.
+        </div>
+
+        <section class="reservation-list" th:if="${!#lists.isEmpty(reservations)}">
+            <article class="reservation-card" th:each="reservation : ${reservations}">
+                <div class="region-visual">
+                    <p class="region-name" th:text="${reservation.region()}"></p>
+                    <p class="region-caption" th:text="${reservation.regionVisual()}"></p>
+                </div>
+
+                <div class="reservation-content">
+                    <div class="reservation-header">
+                        <h2 th:text="${reservation.clientName()}"></h2>
+                        <span class="payment-badge" th:text="${reservation.paymentMethod()}"></span>
+                    </div>
+
+                    <div class="detail-grid">
+                        <div class="detail-box">
+                            <span class="detail-label">Nombre de personnes</span>
+                            <div class="people-icons" th:if="${reservation.personCount() > 0}">
+                                <span th:each="i : ${#numbers.sequence(1, reservation.personCount())}"></span>
+                            </div>
+                        </div>
+
+                        <div class="detail-box">
+                            <span class="detail-label">Region</span>
+                            <strong th:text="${reservation.region()}"></strong>
+                        </div>
+                    </div>
+
+                    <div class="iban-box" th:if="${reservation.bankTransfer}">
+                        <span class="detail-label">IBAN</span>
+                        <strong th:text="${reservation.iban()}"></strong>
+                    </div>
+
+                    <div class="actions">
+                        <form th:action="@{/resa/{id}/cancel(id=${reservation.id()})}" method="post">
+                            <button class="cancel-button" type="submit">Annuler la reservation</button>
+                        </form>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </main>
+</body>
+</html>
