@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu CRUD Conferences</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <main class="shell">
+        <section class="hero">
+            <p class="eyebrow">TP4 - Exercise 3</p>
+            <h1>Gestion des conferences</h1>
+            <p class="lead">Choisissez une operation CRUD pour interagir avec la base SQLite.</p>
+        </section>
+
+        <section class="grid links-grid">
+            <a class="panel action-link" th:href="@{/conferences/create}">
+                <span class="action-kicker">Create</span>
+                <strong>Ajouter une conference</strong>
+                <span>Creer un nouvel enregistrement avec son edition, ses dates et son site web.</span>
+            </a>
+
+            <a class="panel action-link" th:href="@{/conferences/read}">
+                <span class="action-kicker">Read</span>
+                <strong>Rechercher par titre</strong>
+                <span>Afficher les conferences correspondant a un titre saisi.</span>
+            </a>
+
+            <a class="panel action-link" th:href="@{/conferences/update}">
+                <span class="action-kicker">Update</span>
+                <strong>Mettre a jour une conference</strong>
+                <span>Modifier une conference existante a partir de son identifiant.</span>
+            </a>
+
+            <a class="panel action-link" th:href="@{/conferences/delete}">
+                <span class="action-kicker">Delete</span>
+                <strong>Supprimer une conference</strong>
+                <span>Retirer une conference de la base via son identifiant.</span>
+            </a>
+        </section>
+
+        <section class="panel footer-panel">
+            <a class="secondary-link" th:href="@{/conferences/list}">Voir la liste complete des conferences</a>
+        </section>
+    </main>
+</body>
+</html>

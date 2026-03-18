@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supprimer une conference</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <main class="shell">
+        <section class="hero">
+            <p class="eyebrow">Delete</p>
+            <h1>Supprimer une conference</h1>
+            <p class="lead">Saisissez l'identifiant de la conference a retirer de la base.</p>
+        </section>
+
+        <section class="panel form-panel">
+            <form class="conference-form" th:action="@{/conferences/delete}" method="post">
+                <label for="idconf">Identifiant</label>
+                <input id="idconf" name="idconf" type="number" min="1" required>
+
+                <div class="form-actions">
+                    <button type="submit">Supprimer</button>
+                    <a class="secondary-link" th:href="@{/conferences}">Retour au menu</a>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
