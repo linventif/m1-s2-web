@@ -109,6 +109,50 @@ a {
     font: inherit;
 }
 
+.stack {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.stack h2 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.checkbox-grid {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.checkbox-card {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    padding: 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: #fafafa;
+}
+
+.checkbox-card input {
+    width: auto;
+    margin-top: 0.2rem;
+}
+
+.checkbox-card span {
+    display: grid;
+    gap: 0.2rem;
+}
+
+.checkbox-card strong,
+.checkbox-card small {
+    display: block;
+}
+
+.checkbox-card small {
+    color: var(--muted);
+}
+
 .form-actions {
     display: flex;
     flex-wrap: wrap;
@@ -172,6 +216,11 @@ th {
     margin: 1.5rem 0;
     border: 0;
     border-top: 1px solid var(--border);
+}
+
+.inline-list {
+    margin: 0;
+    padding-left: 1.1rem;
 }
 
 @media (max-width: 640px) {

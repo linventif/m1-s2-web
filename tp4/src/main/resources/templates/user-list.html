@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des utilisateurs</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <main class="shell">
+        <section class="hero">
+            <p class="eyebrow">Resultat</p>
+            <h1>Utilisateurs et conferences organisees</h1>
+            <p class="lead" th:text="${message}">Liste des utilisateurs.</p>
+        </section>
+
+        <section class="panel table-panel">
+            <div class="empty-state" th:if="${#lists.isEmpty(users)}">
+                <p>Aucun utilisateur a afficher.</p>
+            </div>
+
+            <div class="table-wrap" th:if="${!#lists.isEmpty(users)}">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Conferences organisees</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="user : ${users}">
+                            <td th:text="${user.id}"></td>
+                            <td th:text="${user.name}"></td>
+                            <td th:text="${user.email}"></td>
+                            <td>
+                                <span th:if="${#sets.isEmpty(user.organizedConferences)}">Aucune conference organisee</span>
+                                <ul class="inline-list" th:if="${!#sets.isEmpty(user.organizedConferences)}">
+                                    <li th:each="conference : ${user.organizedConferences}"
+                                        th:text="|${conference.titleconf} (ID ${conference.idconf})|"></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="form-actions">
+                <a class="secondary-link" th:href="@{/users}">Retour au menu</a>
+                <a class="secondary-link" th:href="@{/users/create}">Ajouter un utilisateur</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
