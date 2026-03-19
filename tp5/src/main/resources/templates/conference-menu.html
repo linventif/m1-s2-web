@@ -4,45 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu CRUD Conferences</title>
-    <link rel="stylesheet" th:href="@{/styles.css}">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
-    <main class="shell">
-        <section class="hero">
-            <p class="eyebrow">TP4 - Exercise 3</p>
-            <h1>Gestion des conferences</h1>
-            <p class="lead">Choisissez une operation CRUD pour interagir avec la base SQLite.</p>
+<body class="min-h-screen bg-base-200 text-base-content">
+    <main class="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 py-6 sm:px-6 lg:px-8">
+        <section class="hero mb-6 overflow-hidden rounded-box bg-gradient-to-r from-primary via-secondary to-accent text-primary-content shadow-xl">
+            <div class="hero-content w-full justify-start px-6 py-8 sm:px-10">
+                <div class="max-w-3xl">
+                    <p class="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-primary/70">TP4 - Exercise 3</p>
+                    <h1 class="text-3xl font-black text-primary sm:text-4xl">Gestion des conferences</h1>
+                    <p class="mt-3 text-sm text-primary/80 sm:text-base">Choisissez une operation CRUD pour interagir avec la base SQLite.</p>
+                </div>
+            </div>
         </section>
 
-        <section class="grid links-grid">
-            <a class="panel action-link" th:href="@{/conferences/create}">
-                <span class="action-kicker">Create</span>
-                <strong>Ajouter une conference</strong>
-                <span>Creer un nouvel enregistrement avec son edition, ses dates et son site web.</span>
+        <section class="grid gap-4 md:grid-cols-2">
+            <a class="card border border-base-300 bg-base-100 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-xl" th:href="@{/conferences/create}">
+                <div class="card-body gap-3">
+                    <span class="badge badge-primary badge-outline w-fit">Create</span>
+                    <h2 class="card-title text-xl">Ajouter une conference</h2>
+                    <p class="text-sm text-base-content/70">Creer un nouvel enregistrement avec son edition, ses dates et son site web.</p>
+                </div>
             </a>
 
-            <a class="panel action-link" th:href="@{/conferences/read}">
-                <span class="action-kicker">Read</span>
-                <strong>Rechercher par titre</strong>
-                <span>Afficher les conferences correspondant a un titre saisi.</span>
+            <a class="card border border-base-300 bg-base-100 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-xl" th:href="@{/conferences/read}">
+                <div class="card-body gap-3">
+                    <span class="badge badge-info badge-outline w-fit">Read</span>
+                    <h2 class="card-title text-xl">Rechercher par titre</h2>
+                    <p class="text-sm text-base-content/70">Afficher les conferences correspondant a un titre saisi.</p>
+                </div>
             </a>
 
-            <a class="panel action-link" th:href="@{/conferences/update}">
-                <span class="action-kicker">Update</span>
-                <strong>Mettre a jour une conference</strong>
-                <span>Modifier une conference existante a partir de son identifiant.</span>
+            <a class="card border border-base-300 bg-base-100 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-xl" th:href="@{/conferences/update}">
+                <div class="card-body gap-3">
+                    <span class="badge badge-warning badge-outline w-fit">Update</span>
+                    <h2 class="card-title text-xl">Mettre a jour une conference</h2>
+                    <p class="text-sm text-base-content/70">Modifier une conference existante a partir de son identifiant.</p>
+                </div>
             </a>
 
-            <a class="panel action-link" th:href="@{/conferences/delete}">
-                <span class="action-kicker">Delete</span>
-                <strong>Supprimer une conference</strong>
-                <span>Retirer une conference de la base via son identifiant.</span>
+            <a class="card border border-base-300 bg-base-100 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-xl" th:href="@{/conferences/delete}">
+                <div class="card-body gap-3">
+                    <span class="badge badge-error badge-outline w-fit">Delete</span>
+                    <h2 class="card-title text-xl">Supprimer une conference</h2>
+                    <p class="text-sm text-base-content/70">Retirer une conference de la base via son identifiant.</p>
+                </div>
             </a>
         </section>
 
-        <section class="panel footer-panel">
-            <a class="secondary-link" th:href="@{/conferences/list}">Voir la liste complete des conferences</a>
-            <a class="secondary-link" th:href="@{/users}">Ouvrir le menu utilisateurs</a>
+        <section class="card mt-6 border border-base-300 bg-base-100 shadow-xl">
+            <div class="card-body flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <a class="btn btn-outline" th:href="@{/conferences/list}">Voir la liste complete des conferences</a>
+                <a class="btn btn-ghost" th:href="@{/users}">Ouvrir le menu utilisateurs</a>
+            </div>
         </section>
     </main>
 </body>

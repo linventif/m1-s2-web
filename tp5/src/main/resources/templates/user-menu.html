@@ -4,38 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu Users</title>
-    <link rel="stylesheet" th:href="@{/styles.css}">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
-    <main class="shell">
-        <section class="hero">
-            <p class="eyebrow">TP4 - Exercise 4</p>
-            <h1>Gestion des utilisateurs</h1>
-            <p class="lead">Creation d'utilisateurs, organisation de conferences et consultation des participations.</p>
+<body class="min-h-screen bg-base-200 text-base-content">
+    <main class="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 py-6 sm:px-6 lg:px-8">
+        <section class="hero mb-6 overflow-hidden rounded-box bg-gradient-to-r from-secondary via-primary to-accent text-secondary-content shadow-xl">
+            <div class="hero-content w-full justify-start px-6 py-8 sm:px-10">
+                <div class="max-w-3xl">
+                    <p class="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-primary/70">TP4 - Exercise 4</p>
+                    <h1 class="text-3xl text-primary font-black sm:text-4xl">Gestion des utilisateurs</h1>
+                    <p class="mt-3 text-sm text-primary/80 sm:text-base">Creation d'utilisateurs, organisation de conferences et consultation des participations.</p>
+                </div>
+            </div>
         </section>
 
-        <section class="grid links-grid">
-            <a class="panel action-link" th:href="@{/users/create}">
-                <span class="action-kicker">Create</span>
-                <strong>Ajouter un utilisateur</strong>
-                <span>Creer un utilisateur et l'associer a des conferences organisees ou suivies.</span>
+        <section class="grid gap-4 lg:grid-cols-3">
+            <a class="card border border-base-300 bg-base-100 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-xl" th:href="@{/users/create}">
+                <div class="card-body gap-3">
+                    <span class="badge badge-primary badge-outline w-fit">Create</span>
+                    <h2 class="card-title text-xl">Ajouter un utilisateur</h2>
+                    <p class="text-sm text-base-content/70">Creer un utilisateur et l'associer a des conferences organisees ou suivies.</p>
+                </div>
             </a>
 
-            <a class="panel action-link" th:href="@{/users/list}">
-                <span class="action-kicker">Read</span>
-                <strong>Voir les organisateurs</strong>
-                <span>Afficher tous les utilisateurs avec les conferences qu'ils organisent.</span>
+            <a class="card border border-base-300 bg-base-100 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-xl" th:href="@{/users/list}">
+                <div class="card-body gap-3">
+                    <span class="badge badge-info badge-outline w-fit">Read</span>
+                    <h2 class="card-title text-xl">Voir les organisateurs</h2>
+                    <p class="text-sm text-base-content/70">Afficher tous les utilisateurs avec les conferences qu'ils organisent.</p>
+                </div>
             </a>
 
-            <a class="panel action-link" th:href="@{/users/participations}">
-                <span class="action-kicker">Read</span>
-                <strong>Voir les participations</strong>
-                <span>Afficher les conferences auxquelles un utilisateur participe a partir de son identifiant.</span>
+            <a class="card border border-base-300 bg-base-100 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-xl" th:href="@{/users/participations}">
+                <div class="card-body gap-3">
+                    <span class="badge badge-accent badge-outline w-fit">Read</span>
+                    <h2 class="card-title text-xl">Voir les participations</h2>
+                    <p class="text-sm text-base-content/70">Afficher les conferences auxquelles un utilisateur participe a partir de son identifiant.</p>
+                </div>
             </a>
         </section>
 
-        <section class="panel footer-panel">
-            <a class="secondary-link" th:href="@{/conferences}">Retour au menu conferences</a>
+        <section class="card mt-6 border border-base-300 bg-base-100 shadow-xl">
+            <div class="card-body">
+                <a class="btn btn-outline w-full sm:w-fit" th:href="@{/conferences}">Retour au menu conferences</a>
+            </div>
         </section>
     </main>
 </body>
