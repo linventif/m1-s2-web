@@ -51,6 +51,7 @@
                                 <th>Edition</th>
                                 <th>Date debut</th>
                                 <th>Date fin</th>
+                                <th>Thematiques</th>
                                 <th>Site web</th>
                             </tr>
                         </thead>
@@ -61,6 +62,14 @@
                                 <td th:text="${conference.nbeditionconf}"></td>
                                 <td th:text="${conference.dtstartconf}"></td>
                                 <td th:text="${conference.dtendconf}"></td>
+                                <td>
+                                    <span class="text-base-content/50" th:if="${#sets.isEmpty(conference.thematiques)}">-</span>
+                                    <ul class="flex flex-wrap gap-2" th:if="${!#sets.isEmpty(conference.thematiques)}">
+                                        <li th:each="thematique : ${conference.thematiques}">
+                                            <span class="badge badge-outline badge-secondary" th:text="${thematique.nomThematique}">Thematique</span>
+                                        </li>
+                                    </ul>
+                                </td>
                                 <td>
                                     <span class="text-base-content/50" th:if="${conference.urlwebsiteconf == null || conference.urlwebsiteconf.isBlank()}">-</span>
                                     <a class="link link-primary break-all"

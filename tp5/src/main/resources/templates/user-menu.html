@@ -12,14 +12,14 @@
         <section class="hero mb-6 overflow-hidden rounded-box bg-gradient-to-r from-secondary via-primary to-accent text-slate-950 shadow-xl">
             <div class="hero-content w-full justify-start px-6 py-8 sm:px-10">
                 <div class="max-w-3xl">
-                    <p class="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-slate-950">TP4 - Exercise 4</p>
+                    <p class="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-slate-950">TP5 - Exercise 5</p>
                     <h1 class="text-3xl font-black text-slate-950 sm:text-4xl">Gestion des utilisateurs</h1>
-                    <p class="mt-3 text-sm text-slate-950 sm:text-base">Creation d'utilisateurs, organisation de conferences et consultation des participations.</p>
+                    <p class="mt-3 text-sm text-slate-950 sm:text-base">Creation d'utilisateurs, gestion du statut, connexion et consultation des participations.</p>
                 </div>
             </div>
         </section>
 
-        <section class="grid gap-4 lg:grid-cols-3">
+        <section class="grid gap-4 md:grid-cols-2">
             <a class="card border border-base-300 bg-base-100 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-xl" th:href="@{/users/create}">
                 <div class="card-body gap-3">
                     <span class="badge badge-primary badge-outline w-fit">Create</span>
@@ -43,11 +43,20 @@
                     <p class="text-sm text-base-content/70">Afficher les conferences auxquelles un utilisateur participe a partir de son identifiant.</p>
                 </div>
             </a>
+
+            <a class="card border border-base-300 bg-base-100 shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-xl" th:href="@{/users/login}">
+                <div class="card-body gap-3">
+                    <span class="badge badge-success badge-outline w-fit">Login</span>
+                    <h2 class="card-title text-xl text-slate-950">Se connecter</h2>
+                    <p class="text-sm text-base-content/70">Acceder a l'espace utilisateur avec email et mot de passe.</p>
+                </div>
+            </a>
         </section>
 
         <section class="card mt-6 border border-base-300 bg-base-100 shadow-xl">
-            <div class="card-body">
+            <div class="card-body flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <a class="btn btn-outline w-full sm:w-fit" th:href="@{/conferences}">Retour au menu conferences</a>
+                <a class="btn btn-ghost w-full sm:w-fit" th:href="@{/users/me}">Espace connecte</a>
             </div>
         </section>
     </main>

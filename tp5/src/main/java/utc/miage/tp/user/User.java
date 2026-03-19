@@ -11,9 +11,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import utc.miage.tp.conference.Conference;
+import utc.miage.tp.statut.Statut;
 
 @Entity
 @Table(name = "users")
@@ -27,8 +29,15 @@ public class User {
 	@Column(name = "name", nullable = false)
 	private String name;
 
-	@Column(name = "email", nullable = false)
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
+
+	@Column(name = "password", nullable = false)
+	private String password;
+
+	@ManyToOne
+	@JoinColumn(name = "code_statut", nullable = false)
+	private Statut statut;
 
 	@OneToMany(mappedBy = "organizer")
 	private Set<Conference> organizedConferences = new LinkedHashSet<>();
@@ -67,6 +76,22 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Statut getStatut() {
+		return statut;
+	}
+
+	public void setStatut(Statut statut) {
+		this.statut = statut;
 	}
 
 	public Set<Conference> getOrganizedConferences() {

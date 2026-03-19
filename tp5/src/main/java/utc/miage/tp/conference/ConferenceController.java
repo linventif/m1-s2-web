@@ -1,5 +1,7 @@
 package utc.miage.tp.conference;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,12 +35,14 @@ public class ConferenceController {
 	@GetMapping("/create")
 	public String showCreateForm(Model model) {
 		model.addAttribute("conference", new Conference());
+		model.addAttribute("thematiques", conferenceService.getAllThematiques());
 		return "conference-create";
 	}
 
 	@PostMapping("/create")
-	public String createConference(@ModelAttribute Conference conference, Model model) {
-		Conference createdConference = conferenceService.addConference(conference);
+	public String createConference(@ModelAttribute Conference conference,
+			@RequestParam(name = "thematiqueIds", required = false) List<Long> thematiqueIds, Model model) {
+		Conference createdConference = conferenceService.addConference(conference, thematiqueIds);
 		model.addAttribute("message", "Conference ajoutee avec succes : " + createdConference.getTitleconf() + ".");
 		model.addAttribute("conferences", conferenceService.getAllConferences());
 		return "conference-list";
@@ -61,12 +65,14 @@ public class ConferenceController {
 	@GetMapping("/update")
 	public String showUpdateForm(Model model) {
 		model.addAttribute("conference", new Conference());
+		model.addAttribute("thematiques", conferenceService.getAllThematiques());
 		return "conference-update";
 	}
 
 	@PostMapping("/update")
-	public String updateConference(@RequestParam Long idconf, @ModelAttribute Conference conference, Model model) {
-		return conferenceService.updateConference(idconf, conference)
+	public String updateConference(@RequestParam Long idconf, @ModelAttribute Conference conference,
+			@RequestParam(name = "thematiqueIds", required = false) List<Long> thematiqueIds, Model model) {
+		return conferenceService.updateConference(idconf, conference, thematiqueIds)
 				.map(updatedConference -> {
 					model.addAttribute("message",
 							"Conference mise a jour avec succes : " + updatedConference.getTitleconf() + ".");

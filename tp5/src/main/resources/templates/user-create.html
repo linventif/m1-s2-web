@@ -22,6 +22,10 @@
         <section class="card border border-base-300 bg-base-100 shadow-xl">
             <div class="card-body p-6 sm:p-8">
                 <form class="grid gap-6" th:action="@{/users/create}" th:object="${user}" method="post">
+                    <div class="alert alert-error" th:if="${errorMessage != null}">
+                        <span th:text="${errorMessage}">Erreur</span>
+                    </div>
+
                     <label class="form-control w-full" for="name">
                         <div class="label">
                             <span class="label-text text-sm font-semibold">Nom</span>
@@ -34,6 +38,25 @@
                             <span class="label-text text-sm font-semibold">Email</span>
                         </div>
                         <input id="email" class="input input-bordered w-full" type="email" th:field="*{email}" required>
+                    </label>
+
+                    <label class="form-control w-full" for="password">
+                        <div class="label">
+                            <span class="label-text text-sm font-semibold">Mot de passe</span>
+                        </div>
+                        <input id="password" class="input input-bordered w-full" name="password" type="password" minlength="6" required>
+                    </label>
+
+                    <label class="form-control w-full" for="codeStatut">
+                        <div class="label">
+                            <span class="label-text text-sm font-semibold">Statut</span>
+                        </div>
+                        <select id="codeStatut" class="select select-bordered w-full" name="codeStatut" required>
+                            <option value="" disabled selected>Choisir un statut</option>
+                            <option th:each="statut : ${statuts}"
+                                    th:value="${statut.codeStatut}"
+                                    th:text="${statut.nomStatut}"></option>
+                        </select>
                     </label>
 
                     <div class="space-y-4">
@@ -77,6 +100,7 @@
                     <div class="mt-2 flex flex-wrap gap-3">
                         <button class="btn btn-primary" type="submit">Ajouter</button>
                         <a class="btn btn-outline" th:href="@{/users}">Retour au menu</a>
+                        <a class="btn btn-ghost" th:href="@{/users/login}">Se connecter</a>
                     </div>
                 </form>
             </div>

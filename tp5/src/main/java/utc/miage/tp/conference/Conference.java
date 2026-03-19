@@ -12,9 +12,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import utc.miage.tp.thematique.Thematique;
 import utc.miage.tp.user.User;
 
 @Entity
@@ -40,6 +42,10 @@ public class Conference {
 
 	@Column(name = "urlwebsiteconf")
 	private String urlwebsiteconf;
+
+	@ManyToMany
+	@JoinTable(name = "traiter", joinColumns = @JoinColumn(name = "idconf"), inverseJoinColumns = @JoinColumn(name = "id_thematique"))
+	private Set<Thematique> thematiques = new LinkedHashSet<>();
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "organizer_id")
@@ -106,6 +112,20 @@ public class Conference {
 
 	public void setUrlwebsiteconf(String urlwebsiteconf) {
 		this.urlwebsiteconf = urlwebsiteconf;
+	}
+
+	public Set<Thematique> getThematiques() {
+		return thematiques;
+	}
+
+	public void setThematiques(Set<Thematique> thematiques) {
+		this.thematiques = thematiques == null ? new LinkedHashSet<>() : new LinkedHashSet<>(thematiques);
+	}
+
+	public void addThematique(Thematique thematique) {
+		if (thematique != null) {
+			thematiques.add(thematique);
+		}
 	}
 
 	public User getOrganizer() {
