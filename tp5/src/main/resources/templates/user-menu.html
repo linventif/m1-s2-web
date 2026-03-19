@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Users</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <main class="shell">
+        <section class="hero">
+            <p class="eyebrow">TP4 - Exercise 4</p>
+            <h1>Gestion des utilisateurs</h1>
+            <p class="lead">Creation d'utilisateurs, organisation de conferences et consultation des participations.</p>
+        </section>
+
+        <section class="grid links-grid">
+            <a class="panel action-link" th:href="@{/users/create}">
+                <span class="action-kicker">Create</span>
+                <strong>Ajouter un utilisateur</strong>
+                <span>Creer un utilisateur et l'associer a des conferences organisees ou suivies.</span>
+            </a>
+
+            <a class="panel action-link" th:href="@{/users/list}">
+                <span class="action-kicker">Read</span>
+                <strong>Voir les organisateurs</strong>
+                <span>Afficher tous les utilisateurs avec les conferences qu'ils organisent.</span>
+            </a>
+
+            <a class="panel action-link" th:href="@{/users/participations}">
+                <span class="action-kicker">Read</span>
+                <strong>Voir les participations</strong>
+                <span>Afficher les conferences auxquelles un utilisateur participe a partir de son identifiant.</span>
+            </a>
+        </section>
+
+        <section class="panel footer-panel">
+            <a class="secondary-link" th:href="@{/conferences}">Retour au menu conferences</a>
+        </section>
+    </main>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un utilisateur</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <main class="shell">
+        <section class="hero">
+            <p class="eyebrow">Create</p>
+            <h1>Ajouter un utilisateur</h1>
+            <p class="lead">Renseignez l'identite de l'utilisateur puis selectionnez, si besoin, les conferences qu'il organise et celles auxquelles il participe.</p>
+        </section>
+
+        <section class="panel form-panel">
+            <form class="conference-form" th:action="@{/users/create}" th:object="${user}" method="post">
+                <label for="name">Nom</label>
+                <input id="name" type="text" th:field="*{name}" required>
+
+                <label for="email">Email</label>
+                <input id="email" type="email" th:field="*{email}" required>
+
+                <div class="stack">
+                    <h2>Conferences organisees</h2>
+                    <p class="section-copy">Chaque conference selectionnee aura cet utilisateur comme organisateur.</p>
+                    <div class="empty-state" th:if="${#lists.isEmpty(conferences)}">
+                        <p>Aucune conference disponible pour le moment.</p>
+                    </div>
+                    <div class="checkbox-grid" th:if="${!#lists.isEmpty(conferences)}">
+                        <label class="checkbox-card" th:each="conference : ${conferences}">
+                            <input type="checkbox" name="organizedConferenceIds" th:value="${conference.idconf}">
+                            <span>
+                                <strong th:text="${conference.titleconf}">Conference</strong>
+                                <small th:text="|ID ${conference.idconf} - edition ${conference.nbeditionconf}|">Infos</small>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="stack">
+                    <h2>Conferences suivies</h2>
+                    <p class="section-copy">Selectionnez les conferences auxquelles l'utilisateur participe.</p>
+                    <div class="empty-state" th:if="${#lists.isEmpty(conferences)}">
+                        <p>Aucune conference disponible pour le moment.</p>
+                    </div>
+                    <div class="checkbox-grid" th:if="${!#lists.isEmpty(conferences)}">
+                        <label class="checkbox-card" th:each="conference : ${conferences}">
+                            <input type="checkbox" name="participatingConferenceIds" th:value="${conference.idconf}">
+                            <span>
+                                <strong th:text="${conference.titleconf}">Conference</strong>
+                                <small th:text="|ID ${conference.idconf} - du ${conference.dtstartconf} au ${conference.dtendconf}|">Infos</small>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit">Ajouter</button>
+                    <a class="secondary-link" th:href="@{/users}">Retour au menu</a>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

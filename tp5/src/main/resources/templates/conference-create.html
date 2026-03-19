@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter une conference</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <main class="shell">
+        <section class="hero">
+            <p class="eyebrow">Create</p>
+            <h1>Ajouter une conference</h1>
+            <p class="lead">Renseignez les informations de la conference a enregistrer dans SQLite.</p>
+        </section>
+
+        <section class="panel form-panel">
+            <form class="conference-form" th:action="@{/conferences/create}" th:object="${conference}" method="post">
+                <label for="titleconf">Titre</label>
+                <input id="titleconf" type="text" th:field="*{titleconf}" required>
+
+                <label for="nbeditionconf">Numero d'edition</label>
+                <input id="nbeditionconf" type="number" min="1" th:field="*{nbeditionconf}" required>
+
+                <label for="dtstartconf">Date de debut</label>
+                <input id="dtstartconf" type="date" th:field="*{dtstartconf}" required>
+
+                <label for="dtendconf">Date de fin</label>
+                <input id="dtendconf" type="date" th:field="*{dtendconf}" required>
+
+                <label for="urlwebsiteconf">Site web</label>
+                <input id="urlwebsiteconf" type="url" th:field="*{urlwebsiteconf}" placeholder="https://example.org">
+
+                <div class="form-actions">
+                    <button type="submit">Ajouter</button>
+                    <a class="secondary-link" th:href="@{/conferences}">Retour au menu</a>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

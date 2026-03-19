@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rechercher une conference</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <main class="shell">
+        <section class="hero">
+            <p class="eyebrow">Read</p>
+            <h1>Rechercher par titre</h1>
+            <p class="lead">Saisissez un titre ou une partie du titre pour filtrer les conferences.</p>
+        </section>
+
+        <section class="panel form-panel">
+            <form class="conference-form" th:action="@{/conferences/read}" method="post">
+                <label for="titleconf">Titre recherche</label>
+                <input id="titleconf" name="titleconf" type="text" required>
+
+                <div class="form-actions">
+                    <button type="submit">Rechercher</button>
+                    <a class="secondary-link" th:href="@{/conferences}">Retour au menu</a>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

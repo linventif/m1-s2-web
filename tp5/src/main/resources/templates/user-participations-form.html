@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rechercher les participations</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <main class="shell">
+        <section class="hero">
+            <p class="eyebrow">Read</p>
+            <h1>Conferences suivies par un utilisateur</h1>
+            <p class="lead">Saisissez l'identifiant d'un utilisateur pour obtenir la liste des conferences auxquelles il participe.</p>
+        </section>
+
+        <section class="panel form-panel">
+            <form class="conference-form" th:action="@{/users/participations}" method="post">
+                <label for="id">Identifiant utilisateur</label>
+                <input id="id" name="id" type="number" min="1" required>
+
+                <div class="form-actions">
+                    <button type="submit">Afficher</button>
+                    <a class="secondary-link" th:href="@{/users}">Retour au menu</a>
+                </div>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

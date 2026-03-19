@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Participations utilisateur</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <main class="shell">
+        <section class="hero">
+            <p class="eyebrow">Resultat</p>
+            <h1>Participations utilisateur</h1>
+            <p class="lead" th:text="${message}">Resultat de la recherche.</p>
+        </section>
+
+        <section class="panel table-panel">
+            <div class="stack" th:if="${user != null}">
+                <p class="section-copy">
+                    Utilisateur :
+                    <strong th:text="${user.name}">Nom</strong>
+                    (<span th:text="${user.email}">email</span>)
+                </p>
+            </div>
+
+            <div class="stack" th:if="${searchedUserId != null}">
+                <p class="section-copy">
+                    Identifiant recherche :
+                    <strong th:text="${searchedUserId}">0</strong>
+                </p>
+            </div>
+
+            <div class="empty-state" th:if="${#lists.isEmpty(conferences)}">
+                <p>Aucune conference a afficher.</p>
+            </div>
+
+            <div class="table-wrap" th:if="${!#lists.isEmpty(conferences)}">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Titre</th>
+                            <th>Edition</th>
+                            <th>Date debut</th>
+                            <th>Date fin</th>
+                            <th>Site web</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="conference : ${conferences}">
+                            <td th:text="${conference.idconf}"></td>
+                            <td th:text="${conference.titleconf}"></td>
+                            <td th:text="${conference.nbeditionconf}"></td>
+                            <td th:text="${conference.dtstartconf}"></td>
+                            <td th:text="${conference.dtendconf}"></td>
+                            <td>
+                                <span th:if="${conference.urlwebsiteconf == null || conference.urlwebsiteconf.isBlank()}">-</span>
+                                <a th:if="${conference.urlwebsiteconf != null && !conference.urlwebsiteconf.isBlank()}"
+                                   th:href="${conference.urlwebsiteconf}"
+                                   th:text="${conference.urlwebsiteconf}"
+                                   target="_blank"
+                                   rel="noreferrer"></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="form-actions">
+                <a class="secondary-link" th:href="@{/users}">Retour au menu</a>
+                <a class="secondary-link" th:href="@{/users/participations}">Nouvelle recherche</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
