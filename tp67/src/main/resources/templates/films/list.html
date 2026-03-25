@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Films populaires</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style type="text/tailwindcss">
+    @theme {
+      --color-cinema-ink: #10141e;
+      --color-cinema-night: #182033;
+      --color-cinema-gold: #f5b83d;
+      --color-cinema-cream: #f7f1df;
+      --color-cinema-coral: #f36b5c;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[radial-gradient(circle_at_top,_#f7f1df,_#efe1bc_35%,_#d3d7e7_100%)] text-cinema-ink">
+  <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="relative overflow-hidden rounded-[2rem] border border-black/10 bg-cinema-ink text-cinema-cream shadow-2xl">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(243,107,92,0.35),_transparent_35%),radial-gradient(circle_at_bottom_right,_rgba(245,184,61,0.25),_transparent_30%)]"></div>
+      <div class="relative flex flex-col gap-8 px-6 py-8 sm:px-8 lg:flex-row lg:items-end lg:justify-between lg:px-10">
+        <div class="max-w-3xl space-y-4">
+          <div class="badge badge-warning badge-outline border-cinema-gold/60 px-4 py-3 text-xs uppercase tracking-[0.3em] text-cinema-gold">TMDB Explorer</div>
+          <div class="space-y-3">
+            <h1 class="font-serif text-4xl leading-tight sm:text-5xl">Films populaires</h1>
+            <p class="max-w-2xl text-sm text-cinema-cream/75 sm:text-base">
+              Clique sur une affiche pour ouvrir la fiche detaillee du film, puis ajoute-le a tes favoris ou a ta liste a voir.
+            </p>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3 self-start lg:min-w-72">
+          <div class="rounded-3xl bg-white/8 p-4 backdrop-blur">
+            <p class="text-xs uppercase tracking-[0.25em] text-cinema-cream/60">Page</p>
+            <p class="mt-2 text-3xl font-semibold" th:text="${currentPage}">1</p>
+          </div>
+          <div class="rounded-3xl bg-white/8 p-4 backdrop-blur">
+            <p class="text-xs uppercase tracking-[0.25em] text-cinema-cream/60">Total pages</p>
+            <p class="mt-2 text-3xl font-semibold" th:text="${filmPage.totalPages}">1</p>
+          </div>
+          <div class="rounded-3xl bg-white/8 p-4 backdrop-blur">
+            <p class="text-xs uppercase tracking-[0.25em] text-cinema-cream/60">Favoris</p>
+            <p class="mt-2 text-3xl font-semibold" th:text="${favoriteCount}">0</p>
+          </div>
+          <div class="rounded-3xl bg-white/8 p-4 backdrop-blur">
+            <p class="text-xs uppercase tracking-[0.25em] text-cinema-cream/60">A voir</p>
+            <p class="mt-2 text-3xl font-semibold" th:text="${watchlistCount}">0</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-8">
+      <div class="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p class="text-sm uppercase tracking-[0.25em] text-cinema-night/60">Catalogue courant</p>
+          <h2 class="mt-2 text-2xl font-semibold">Selection de la page <span th:text="${currentPage}">1</span></h2>
+        </div>
+        <div class="join self-start sm:self-center">
+          <a class="btn join-item btn-outline border-cinema-night/20 bg-white/70"
+             th:classappend="${!hasPrevious} ? ' btn-disabled pointer-events-none opacity-40'"
+             th:href="@{/films/list(page=${currentPage - 1})}">
+            Page precedente
+          </a>
+          <a class="btn join-item btn-primary border-0 bg-cinema-night text-cinema-cream hover:bg-cinema-night/90"
+             th:classappend="${!hasNext} ? ' btn-disabled pointer-events-none opacity-40'"
+             th:href="@{/films/list(page=${currentPage + 1})}">
+            Page suivante
+          </a>
+        </div>
+      </div>
+
+      <div class="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+        <a th:each="film : ${films}"
+           th:href="@{/films/{id}(id=${film.id})}"
+           class="group block overflow-hidden rounded-[1.75rem] border border-black/10 bg-white/70 shadow-lg shadow-slate-900/5 transition duration-300 hover:-translate-y-1 hover:shadow-2xl">
+          <div class="relative aspect-[2/3] overflow-hidden bg-cinema-night/10">
+            <img th:if="${film.posterUrl() != null}"
+                 th:src="${film.posterUrl()}"
+                 th:alt="${film.title}"
+                 class="h-full w-full object-cover transition duration-500 group-hover:scale-105">
+            <div th:if="${film.posterUrl() == null}"
+                 class="flex h-full items-center justify-center bg-[linear-gradient(135deg,_#182033,_#2e3f5f)] p-6 text-center text-cinema-cream">
+              <span class="text-sm uppercase tracking-[0.2em]">Visuel indisponible</span>
+            </div>
+            <div class="absolute left-4 top-4 badge border-0 bg-cinema-gold text-cinema-ink" th:text="${film.releaseYear()}">2024</div>
+          </div>
+          <div class="space-y-4 p-5">
+            <div class="space-y-2">
+              <h3 class="line-clamp-2 text-xl font-semibold text-cinema-ink" th:text="${film.title}">Titre</h3>
+              <p class="line-clamp-4 text-sm leading-6 text-slate-600" th:text="${film.overview}">Synopsis</p>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="badge badge-outline border-cinema-coral/40 bg-cinema-coral/10 px-3 py-3 text-cinema-coral">
+                Note <span class="ml-1 font-semibold" th:text="${film.voteAverage}">7.8</span>
+              </div>
+              <span class="text-sm font-medium text-slate-500">Voir la fiche</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

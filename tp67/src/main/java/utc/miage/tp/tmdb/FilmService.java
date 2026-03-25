@@ -10,14 +10,17 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class FilmService {
 
   private final RestTemplate restTemplate;
+  private final FilmCollectionEntryRepository filmCollectionEntryRepository;
   private final String apiKey;
   private final String baseUrl;
 
   public FilmService(
       RestTemplate restTemplate,
+      FilmCollectionEntryRepository filmCollectionEntryRepository,
       @Value("${tmdb.api-key:${tmdb.api.key}}") String apiKey,
       @Value("${tmdb.base-url:${tmdb.api.base-url}}") String baseUrl) {
     this.restTemplate = restTemplate;
+    this.filmCollectionEntryRepository = filmCollectionEntryRepository;
     this.apiKey = apiKey;
     this.baseUrl = baseUrl;
   }
@@ -55,5 +58,37 @@ public class FilmService {
     }
 
     return response;
+  }
+
+  public void addToFavorites(long id) {
+    saveIfMissing(id, FilmCollectionType.FAVORITE);
+  }
+
+  public void addToWatchlist(long id) {
+    saveIfMissing(id, FilmCollectionType.WATCHLIST);
+  }
+
+  public boolean isFavorite(long id) {
+    return filmCollectionEntryRepository.existsByFilmIdAndCollectionType(id, FilmCollectionType.FAVORITE);
+  }
+
+  public boolean isInWatchlist(long id) {
+    return filmCollectionEntryRepository.existsByFilmIdAndCollectionType(id, FilmCollectionType.WATCHLIST);
+  }
+
+  public int favoriteCount() {
+    return Math.toIntExact(filmCollectionEntryRepository.countByCollectionType(FilmCollectionType.FAVORITE));
+  }
+
+  public int watchlistCount() {
+    return Math.toIntExact(filmCollectionEntryRepository.countByCollectionType(FilmCollectionType.WATCHLIST));
+  }
+
+  private void saveIfMissing(long filmId, FilmCollectionType collectionType) {
+    if (filmCollectionEntryRepository.existsByFilmIdAndCollectionType(filmId, collectionType)) {
+      return;
+    }
+
+    filmCollectionEntryRepository.save(new FilmCollectionEntry(filmId, collectionType));
   }
 }

@@ -8,6 +8,6 @@ public class HomeController {
 
 	@GetMapping("/")
 	public String redirectToConferenceMenu() {
-		return "redirect:/api/films/popular?page=1";
+		return "redirect:/films/list?page=1";
 	}
 }
