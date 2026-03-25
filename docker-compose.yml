@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres:17-alpine
-    container_name: tp5-postgres
+    container_name: m1-s2-web
     environment:
       POSTGRES_DB: conferences
       POSTGRES_USER: psql
