@@ -1,17 +1,5 @@
 spring.application.name=tp
 
-# Configuration PostgreSQL
-spring.datasource.url=${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/conferences}
-spring.datasource.driver-class-name=org.postgresql.Driver
-spring.datasource.username=${SPRING_DATASOURCE_USERNAME:psql}
-spring.datasource.password=${SPRING_DATASOURCE_PASSWORD:psql}
-
-# Configuration of Hibernate
-spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
-spring.jpa.hibernate.ddl-auto=create-drop
-spring.jpa.show-sql=true
-
-# API Keys for The Movie Database (TMDb)
-tmdb.api.key=${TMDB_API_KEY:your_tmdb_api_key_here}
-tmdb.api.token=${TMDB_API_TOKEN:your_tmdb_api_token_here}
-tmdb.api.base-url=https://api.themoviedb.org/3
+# TMDB
+tmdb.api-key=${TMDB_API_KEY:YOUR_TMDB_API_KEY}
+tmdb.base-url=${TMDB_BASE_URL:https://api.themoviedb.org/3}
