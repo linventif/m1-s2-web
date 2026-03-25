@@ -15,8 +15,8 @@ public class FilmService {
 
   public FilmService(
       RestTemplate restTemplate,
-      @Value("${tmdb.api-key}") String apiKey,
-      @Value("${tmdb.base-url}") String baseUrl) {
+      @Value("${tmdb.api-key:${tmdb.api.key}}") String apiKey,
+      @Value("${tmdb.base-url:${tmdb.api.base-url}}") String baseUrl) {
     this.restTemplate = restTemplate;
     this.apiKey = apiKey;
     this.baseUrl = baseUrl;
