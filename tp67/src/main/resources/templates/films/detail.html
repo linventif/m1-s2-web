@@ -40,16 +40,26 @@
 
     <section class="card bg-base-100 shadow">
       <div class="card-body gap-6 lg:flex-row">
-        <div class="card w-full max-w-xs bg-base-200 shadow-sm">
-          <figure class="aspect-[2/3] bg-base-300">
-            <img th:if="${film.posterUrl() != null}"
-                 th:src="${film.posterUrl()}"
-                 th:alt="${film.title}"
-                 class="h-full w-full object-cover">
-            <div th:if="${film.posterUrl() == null}" class="flex h-full w-full items-center justify-center p-6 text-center text-base-content/60">
-              Aucune affiche
-            </div>
-          </figure>
+        <div class="w-full max-w-xs">
+          <div class="hover-3d">
+            <figure class="aspect-[2/3] overflow-hidden rounded-box bg-base-300 shadow-sm">
+              <img th:if="${film.posterUrl() != null}"
+                   th:src="${film.posterUrl()}"
+                   th:alt="${film.title}"
+                   class="h-full w-full object-cover">
+              <div th:if="${film.posterUrl() == null}" class="flex h-full w-full items-center justify-center p-6 text-center text-base-content/60">
+                Aucune affiche
+              </div>
+            </figure>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
         </div>
 
         <div class="w-full space-y-6">
