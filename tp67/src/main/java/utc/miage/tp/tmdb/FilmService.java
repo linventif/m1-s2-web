@@ -1,8 +1,11 @@
 package utc.miage.tp.tmdb;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import utc.miage.tp.user.AppUser;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -60,35 +63,54 @@ public class FilmService {
     return response;
   }
 
-  public void addToFavorites(long id) {
-    saveIfMissing(id, FilmCollectionType.FAVORITE);
+  public void addToFavorites(AppUser user, long id) {
+    saveIfMissing(user, id, FilmCollectionType.FAVORITE);
   }
 
-  public void addToWatchlist(long id) {
-    saveIfMissing(id, FilmCollectionType.WATCHLIST);
+  public void addToWatchlist(AppUser user, long id) {
+    saveIfMissing(user, id, FilmCollectionType.WATCHLIST);
   }
 
-  public boolean isFavorite(long id) {
-    return filmCollectionEntryRepository.existsByFilmIdAndCollectionType(id, FilmCollectionType.FAVORITE);
+  public boolean isFavorite(Optional<AppUser> user, long id) {
+    return user.isPresent()
+        && filmCollectionEntryRepository.existsByUserIdAndFilmIdAndCollectionType(
+            user.get().getId(), id, FilmCollectionType.FAVORITE);
   }
 
-  public boolean isInWatchlist(long id) {
-    return filmCollectionEntryRepository.existsByFilmIdAndCollectionType(id, FilmCollectionType.WATCHLIST);
+  public boolean isInWatchlist(Optional<AppUser> user, long id) {
+    return user.isPresent()
+        && filmCollectionEntryRepository.existsByUserIdAndFilmIdAndCollectionType(
+            user.get().getId(), id, FilmCollectionType.WATCHLIST);
   }
 
-  public int favoriteCount() {
-    return Math.toIntExact(filmCollectionEntryRepository.countByCollectionType(FilmCollectionType.FAVORITE));
+  public int favoriteCount(Optional<AppUser> user) {
+    return user.map(value ->
+            Math.toIntExact(filmCollectionEntryRepository.countByUserIdAndCollectionType(
+                value.getId(), FilmCollectionType.FAVORITE)))
+        .orElse(0);
   }
 
-  public int watchlistCount() {
-    return Math.toIntExact(filmCollectionEntryRepository.countByCollectionType(FilmCollectionType.WATCHLIST));
+  public int watchlistCount(Optional<AppUser> user) {
+    return user.map(value ->
+            Math.toIntExact(filmCollectionEntryRepository.countByUserIdAndCollectionType(
+                value.getId(), FilmCollectionType.WATCHLIST)))
+        .orElse(0);
   }
 
-  private void saveIfMissing(long filmId, FilmCollectionType collectionType) {
-    if (filmCollectionEntryRepository.existsByFilmIdAndCollectionType(filmId, collectionType)) {
+  public List<FilmDTO> getUserSelections(AppUser user, FilmCollectionType collectionType) {
+    return filmCollectionEntryRepository
+        .findAllByUserIdAndCollectionTypeOrderByIdDesc(user.getId(), collectionType)
+        .stream()
+        .map(entry -> getFilmById(entry.getFilmId()))
+        .toList();
+  }
+
+  private void saveIfMissing(AppUser user, long filmId, FilmCollectionType collectionType) {
+    if (filmCollectionEntryRepository.existsByUserIdAndFilmIdAndCollectionType(
+        user.getId(), filmId, collectionType)) {
       return;
     }
 
-    filmCollectionEntryRepository.save(new FilmCollectionEntry(filmId, collectionType));
+    filmCollectionEntryRepository.save(new FilmCollectionEntry(user, filmId, collectionType));
   }
 }

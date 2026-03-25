@@ -7,13 +7,16 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import utc.miage.tp.user.AppUser;
 
 @Entity
 @Table(
     name = "film_collection_entries",
-    uniqueConstraints = @UniqueConstraint(columnNames = {"film_id", "collection_type"}))
+    uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "film_id", "collection_type"}))
 public class FilmCollectionEntry {
 
   @Id
@@ -23,6 +26,10 @@ public class FilmCollectionEntry {
   @Column(name = "film_id", nullable = false)
   private Long filmId;
 
+  @ManyToOne(optional = true)
+  @JoinColumn(name = "user_id")
+  private AppUser user;
+
   @Enumerated(EnumType.STRING)
   @Column(name = "collection_type", nullable = false, length = 32)
   private FilmCollectionType collectionType;
@@ -31,7 +38,8 @@ public class FilmCollectionEntry {
     // Required by JPA.
   }
 
-  public FilmCollectionEntry(Long filmId, FilmCollectionType collectionType) {
+  public FilmCollectionEntry(AppUser user, Long filmId, FilmCollectionType collectionType) {
+    this.user = user;
     this.filmId = filmId;
     this.collectionType = collectionType;
   }
@@ -42,6 +50,10 @@ public class FilmCollectionEntry {
 
   public Long getFilmId() {
     return filmId;
+  }
+
+  public AppUser getUser() {
+    return user;
   }
 
   public FilmCollectionType getCollectionType() {

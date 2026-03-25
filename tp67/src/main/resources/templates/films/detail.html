@@ -26,6 +26,12 @@
             </option>
           </select>
         </form>
+        <a th:if="${currentUser != null}" href="/films/my-list" class="btn btn-ghost btn-sm">Mes listes</a>
+        <a th:if="${currentUser == null}" th:href="@{/auth/login(redirect=${currentUrl})}" class="btn btn-ghost btn-sm">Connexion</a>
+        <a th:if="${currentUser == null}" th:href="@{/auth/signup(redirect=${currentUrl})}" class="btn btn-primary btn-sm">Inscription</a>
+        <form th:if="${currentUser != null}" action="/auth/logout" method="post">
+          <button type="submit" class="btn btn-ghost btn-sm">Deconnexion</button>
+        </form>
         <div class="badge badge-primary gap-2">Favoris <span th:text="${favoriteCount}">0</span></div>
         <div class="badge badge-secondary gap-2">A voir <span th:text="${watchlistCount}">0</span></div>
       </div>

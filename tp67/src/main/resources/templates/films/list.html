@@ -12,7 +12,7 @@
   <div class="navbar bg-base-100 border-b">
     <div class="mx-auto flex w-full max-w-6xl items-center px-4">
       <div class="flex-1">
-        <a class="btn btn-ghost text-lg">TMDB Explorer</a>
+        <a href="/films/list?page=1" class="btn btn-ghost text-lg">TMDB Explorer</a>
       </div>
       <div class="flex items-center gap-2">
         <form action="/theme" method="post" class="form-control">
@@ -26,6 +26,12 @@
             </option>
           </select>
         </form>
+        <a th:if="${currentUser != null}" href="/films/my-list" class="btn btn-ghost btn-sm">Mes listes</a>
+        <a th:if="${currentUser == null}" th:href="@{/auth/login(redirect=${currentUrl})}" class="btn btn-ghost btn-sm">Connexion</a>
+        <a th:if="${currentUser == null}" th:href="@{/auth/signup(redirect=${currentUrl})}" class="btn btn-primary btn-sm">Inscription</a>
+        <form th:if="${currentUser != null}" action="/auth/logout" method="post">
+          <button type="submit" class="btn btn-ghost btn-sm">Deconnexion</button>
+        </form>
         <div class="badge badge-primary gap-2">Favoris <span th:text="${favoriteCount}">0</span></div>
         <div class="badge badge-secondary gap-2">A voir <span th:text="${watchlistCount}">0</span></div>
       </div>
@@ -33,11 +39,20 @@
   </div>
 
   <main class="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6">
+    <div th:if="${feedbackMessage != null}"
+         class="alert"
+         th:classappend="${feedbackType == 'success'} ? ' alert-success' : (${feedbackType == 'error'} ? ' alert-error' : ' alert-info')">
+      <span th:text="${feedbackMessage}">Information</span>
+    </div>
+
     <section class="card bg-base-100 shadow">
       <div class="card-body gap-4">
         <h1 class="card-title text-3xl">Films populaires</h1>
         <p class="text-sm text-base-content/70">
           Clique sur un film pour voir son detail et l'ajouter a tes listes.
+        </p>
+        <p class="text-sm text-base-content/70" th:if="${currentUser != null}">
+          Connecte en tant que <span class="font-semibold" th:text="${currentUser.displayName()}">Utilisateur</span>.
         </p>
         <div class="stats stats-horizontal shadow">
           <div class="stat">

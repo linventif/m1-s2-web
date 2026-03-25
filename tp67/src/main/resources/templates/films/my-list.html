@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" th:attr="data-theme=${currentTheme}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mes listes</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="min-h-screen bg-base-200">
+  <div class="navbar bg-base-100 border-b">
+    <div class="mx-auto flex w-full max-w-6xl items-center px-4">
+      <div class="flex-1">
+        <a href="/films/list?page=1" class="btn btn-ghost text-lg">TMDB Explorer</a>
+      </div>
+      <div class="flex items-center gap-2">
+        <form action="/theme" method="post" class="form-control">
+          <input type="hidden" name="redirect" th:value="${currentUrl}">
+          <select class="select select-bordered select-sm" name="theme" onchange="this.form.submit()">
+            <option th:each="theme : ${themes}" th:value="${theme}" th:text="${theme}" th:selected="${theme == currentTheme}">corporate</option>
+          </select>
+        </form>
+        <a href="/films/my-list" class="btn btn-ghost btn-sm">Mes listes</a>
+        <form action="/auth/logout" method="post">
+          <button type="submit" class="btn btn-ghost btn-sm">Deconnexion</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <main class="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6">
+    <section class="card bg-base-100 shadow">
+      <div class="card-body">
+        <h1 class="card-title text-3xl">Mes listes</h1>
+        <p class="text-base-content/70">
+          <span th:text="${currentUser.displayName()}">Utilisateur</span>, retrouve ici tes films favoris et ta liste a voir.
+        </p>
+        <div class="stats stats-horizontal shadow w-fit">
+          <div class="stat">
+            <div class="stat-title">Favoris</div>
+            <div class="stat-value text-primary" th:text="${favoriteCount}">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-title">A voir</div>
+            <div class="stat-value text-secondary" th:text="${watchlistCount}">0</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid gap-6 lg:grid-cols-2">
+      <div class="card bg-base-100 shadow">
+        <div class="card-body">
+          <h2 class="card-title">Favoris</h2>
+          <div class="space-y-3" th:if="${!favoriteFilms.isEmpty()}">
+            <a th:each="film : ${favoriteFilms}" th:href="@{/films/{id}(id=${film.id})}" class="card card-side bg-base-200 shadow-sm">
+              <figure class="w-24 shrink-0 bg-base-300">
+                <img th:if="${film.posterUrl() != null}" th:src="${film.posterUrl()}" th:alt="${film.title}" class="h-full w-full object-cover">
+                <div th:if="${film.posterUrl() == null}" class="p-4 text-center text-sm text-base-content/60">Pas d'image</div>
+              </figure>
+              <div class="card-body p-4">
+                <h3 class="card-title text-base" th:text="${film.title}">Titre</h3>
+                <p class="text-sm text-base-content/70" th:text="${film.releaseDate}">2024-01-01</p>
+              </div>
+            </a>
+          </div>
+          <div class="alert" th:if="${favoriteFilms.isEmpty()}">
+            <span>Aucun film en favori pour le moment.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-base-100 shadow">
+        <div class="card-body">
+          <h2 class="card-title">Liste a voir</h2>
+          <div class="space-y-3" th:if="${!watchlistFilms.isEmpty()}">
+            <a th:each="film : ${watchlistFilms}" th:href="@{/films/{id}(id=${film.id})}" class="card card-side bg-base-200 shadow-sm">
+              <figure class="w-24 shrink-0 bg-base-300">
+                <img th:if="${film.posterUrl() != null}" th:src="${film.posterUrl()}" th:alt="${film.title}" class="h-full w-full object-cover">
+                <div th:if="${film.posterUrl() == null}" class="p-4 text-center text-sm text-base-content/60">Pas d'image</div>
+              </figure>
+              <div class="card-body p-4">
+                <h3 class="card-title text-base" th:text="${film.title}">Titre</h3>
+                <p class="text-sm text-base-content/70" th:text="${film.releaseDate}">2024-01-01</p>
+              </div>
+            </a>
+          </div>
+          <div class="alert" th:if="${watchlistFilms.isEmpty()}">
+            <span>Aucun film a voir pour le moment.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
