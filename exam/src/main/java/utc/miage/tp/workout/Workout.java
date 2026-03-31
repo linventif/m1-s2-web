@@ -12,6 +12,8 @@ import jakarta.persistence.Table;
 import utc.miage.tp.sport.Sport;
 import utc.miage.tp.user.User;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 @Table(name = "workout")
@@ -31,10 +33,36 @@ public class Workout {
   @Column(name = "duration", nullable = false)
   private Double duration;
 
-  public Workout(Date date, Double distance, Double duration) {// , Sport sport, User user) {
+  @ManyToOne
+  @JoinColumn(name = "sport", nullable = false)
+  private Sport sport;
+
+  @ManyToOne
+  @JoinColumn(name = "user", nullable = false)
+  private User user;
+
+  public Sport getSport() {
+    return sport;
+  }
+
+  public void setSport(Sport sport) {
+    this.sport = sport;
+  }
+
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
+
+  public Workout(Date date, Double distance, Double duration, Sport sport, User user) {
     this.date = date;
     this.distance = distance;
     this.duration = duration;
+    this.sport = sport;
+    this.user = user;
   }
 
   public Long getId() {

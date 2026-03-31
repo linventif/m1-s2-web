@@ -56,6 +56,23 @@ public class UserController {
 		}
 	}
 
+	@GetMapping("/profile")
+	public String showProfile(Model model) {
+		model.addAttribute("user", userService.getAllUser());
+		return "user-profile";
+	}
+
+	@GetMapping("/users")
+	public String showAllUsers(Model model) {
+		model.addAttribute("users", userService.getAllUser());
+		return "user-users";
+	}
+
+	@GetMapping("/workout")
+	public String showWorkout() {
+		return "user-workout";
+	}
+
 	@GetMapping("/list")
 	public String showUsers(Model model) {
 		model.addAttribute("message", "Liste complete des utilisateurs et des conferences qu'ils organisent.");

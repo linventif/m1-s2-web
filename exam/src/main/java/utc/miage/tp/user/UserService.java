@@ -34,6 +34,13 @@ public class UserService {
 	}
 
 	@Transactional(readOnly = true)
+	public List<User> getAllUser() {
+		List<User> users = userRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
+
+		return users;
+	}
+
+	@Transactional(readOnly = true)
 	public List<User> getAllUsersWithOrganizedConferences() {
 		List<User> users = userRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
 		users.forEach(user -> {

@@ -17,7 +17,8 @@ public class WorkoutService {
 
 	@Transactional
 	public Workout createWorkout(Workout workout) {
-		Workout newWorkout = new Workout(workout.getDate(), workout.getDistance(), workout.getDuration());
+		Workout newWorkout = new Workout(workout.getDate(), workout.getDistance(), workout.getDuration(),
+				workout.getSport(), workout.getUser());
 
 		Workout savedWorkout = workoutRepository.save(newWorkout);
 
@@ -28,4 +29,9 @@ public class WorkoutService {
 	public List<Workout> getAllStatuts() {
 		return workoutRepository.findAll();
 	}
+
+	// @Transactional(readOnly = true)
+	// public List<Workout> getAllStatutsForUser(User user) {
+	// return workoutRepository.findAll();
+	// }
 }
