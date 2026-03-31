@@ -25,12 +25,10 @@ public class Workout {
   @ColumnDefault("current_date")
   private Date date;
 
-	@Column(name = "distance", nullable = false)
-  @ColumnDefault("0")
+  @Column(name = "distance", nullable = false)
   private Double distance;
 
   @Column(name = "duration", nullable = false)
-  @ColumnDefault("0")
   private Double duration;
 
   public Workout(Date date, Double distance, Double duration) {// , Sport sport, User user) {

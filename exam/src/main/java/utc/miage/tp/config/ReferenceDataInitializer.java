@@ -113,36 +113,12 @@ public class ReferenceDataInitializer implements CommandLineRunner {
 				createConference("Paris AI Summit", 2026, LocalDate.of(2026, 4, 10), LocalDate.of(2026, 4, 12),
 						"https://paris-ai.demo.local", users.get(0), thematiques, "IA", "Data Engineering"),
 				createConference("DevOps Days Lyon", 9, LocalDate.of(2026, 5, 5), LocalDate.of(2026, 5, 6),
-						"https://devops-lyon.demo.local", users.get(1), thematiques, "DevOps", "Cloud"),
-				createConference("Cyber Future Expo", 4, LocalDate.of(2026, 5, 20), LocalDate.of(2026, 5, 22),
-						"https://cyber-future.demo.local", users.get(5), thematiques, "Cybersecurite", "Cloud"),
-				createConference("Open Source Connect", 12, LocalDate.of(2026, 6, 3), LocalDate.of(2026, 6, 5),
-						"https://opensource-connect.demo.local", users.get(6), thematiques, "Open Source", "Web"),
-				createConference("Cloud Native Toulouse", 3, LocalDate.of(2026, 6, 18), LocalDate.of(2026, 6, 19),
-						"https://cloud-native.demo.local", users.get(9), thematiques, "Cloud", "DevOps"),
-				createConference("Data Forge Europe", 7, LocalDate.of(2026, 7, 1), LocalDate.of(2026, 7, 3),
-						"https://data-forge.demo.local", users.get(10), thematiques, "Data Engineering", "IA"),
-				createConference("Web Scale Lille", 5, LocalDate.of(2026, 8, 25), LocalDate.of(2026, 8, 26),
-						"https://web-scale.demo.local", users.get(11), thematiques, "Web", "Informatique"),
-				createConference("IoT Industry Forum", 2, LocalDate.of(2026, 9, 10), LocalDate.of(2026, 9, 11),
-						"https://iot-forum.demo.local", users.get(13), thematiques, "IoT", "Robotique"),
-				createConference("Robotics Research Days", 6, LocalDate.of(2026, 10, 7), LocalDate.of(2026, 10, 9),
-						"https://robotics-days.demo.local", users.get(3), thematiques, "Robotique", "IA"),
-				createConference("Full Stack Nantes", 8, LocalDate.of(2026, 11, 12), LocalDate.of(2026, 11, 13),
-						"https://fullstack-nantes.demo.local", users.get(12), thematiques, "Web", "Open Source"));
+						"https://devops-lyon.demo.local", users.get(1), thematiques, "DevOps", "Cloud"));
 
 		conferenceRepository.saveAll(conferences);
 
-		registerParticipants(conferences.get(0), users.get(2), users.get(4), users.get(7), users.get(8), users.get(14));
-		registerParticipants(conferences.get(1), users.get(0), users.get(3), users.get(6), users.get(10), users.get(13));
-		registerParticipants(conferences.get(2), users.get(1), users.get(5), users.get(9), users.get(12), users.get(14));
-		registerParticipants(conferences.get(3), users.get(2), users.get(6), users.get(8), users.get(11), users.get(12));
-		registerParticipants(conferences.get(4), users.get(1), users.get(4), users.get(5), users.get(10), users.get(13));
-		registerParticipants(conferences.get(5), users.get(0), users.get(3), users.get(7), users.get(11), users.get(14));
-		registerParticipants(conferences.get(6), users.get(2), users.get(8), users.get(9), users.get(12), users.get(13));
-		registerParticipants(conferences.get(7), users.get(4), users.get(5), users.get(7), users.get(10), users.get(11));
-		registerParticipants(conferences.get(8), users.get(0), users.get(3), users.get(6), users.get(9), users.get(14));
-		registerParticipants(conferences.get(9), users.get(1), users.get(2), users.get(8), users.get(11), users.get(12));
+		registerParticipants(conferences.get(0), users.get(1), users.get(2));
+		registerParticipants(conferences.get(1), users.get(0), users.get(2));
 
 		userRepository.saveAll(users);
 	}
