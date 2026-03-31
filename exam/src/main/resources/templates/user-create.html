@@ -47,23 +47,19 @@
                         <input id="password" class="input input-bordered w-full" name="password" type="password" minlength="6" required>
                     </label>
 
-                    <label class="form-control w-full" for="codeStatut">
-                        <div class="label">
-                            <span class="label-text text-sm font-semibold">Statut</span>
-                        </div>
-                        <select id="codeStatut" class="select select-bordered w-full" name="codeStatut" required>
-                            <option value="" disabled selected>Choisir un statut</option>
-                            <option th:each="statut : ${statuts}"
-                                    th:value="${statut.codeStatut}"
-                                    th:text="${statut.nomStatut}"></option>
-                        </select>
-                    </label>
 
-                    <div class="mt-2 flex flex-wrap gap-3">
-                        <button class="btn btn-primary" type="submit">Ajouter</button>
-                        <a class="btn btn-outline" th:href="@{/users}">Retour au menu</a>
-                        <a class="btn btn-ghost" th:href="@{/users/login}">Se connecter</a>
-                    </div>
+                   <div class="flex gap-10 ">
+          <div class="flex gap-2">
+          <a class="btn btn-outline group-item" th:href="@{/users/profile}">Profil</a>
+          <a class="btn btn-outline group-item" th:href="@{/users/friends}">Amis</a>
+          <a class="btn btn-outline group-item" th:href="@{/users/users}">Utilisateurs</a>
+          <a class="btn btn-outline group-item" th:href="@{/users/workout}">Activités</a>
+          </div>
+          <div class="flex gap-2">
+              <a class="btn btn-outline" th:href="@{/users/login}">Se Connecter</a>
+              <a class="btn btn-outline" th:href="@{/users/create}">Créer un Compte</a>
+          </div>
+        </div>
                 </form>
             </div>
         </section>

@@ -9,18 +9,6 @@
 </head>
 <body class="min-h-screen bg-base-200 text-base-content">
   <main class="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 py-6 sm:px-6 lg:px-8">
-      <section class="hero mb-6 overflow-hidden rounded-box bg-gradient-to-r from-success via-primary to-accent text-slate-950 shadow-xl">
-            <div class="hero-content w-full justify-start px-6 py-8 sm:px-10">
-                <div class="max-w-4xl">
-                    <p class="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-slate-950">Session</p>
-                    <h1 class="text-3xl font-black text-slate-950 sm:text-4xl">Profil utilisateur</h1>
-                    <p class="mt-3 text-sm text-slate-950 sm:text-base">
-                        Connecte en tant que
-                        <strong th:text="${user.name}">Utilisateur</strong>
-                    </p>
-                </div>
-            </div>
-        </section>
       <section class="card border border-base-300 bg-base-100 shadow-xl">
         <div class="card-body gap-6 p-6 sm:p-8">
           <h3 class="text-xl">
@@ -48,14 +36,18 @@
               Sport:
               <i class="" th:text="${user.sex}">sexe</i>
             </p>
-        </div>
-        <div class="card-body gap-6 p-6 sm:p-8">
-          <div class="flex flex-wrap gap-3">
-            <a class="btn btn-outline" th:href="@{/users/profile}">Profil</a>
-            <a class="btn btn-outline" th:href="@{/users/friends}">Amis</a>
-            <a class="btn btn-outline" th:href="@{/users/users}">Utilisateurs</a>
-            <a class="btn btn-outline" th:href="@{/users/workout}">Activités</a>
+        <div class="flex gap-10 ">
+          <div class="flex gap-2">
+          <a class="btn btn-outline group-item" th:href="@{/users/profile}">Profil</a>
+          <a class="btn btn-outline group-item" th:href="@{/users/friends}">Amis</a>
+          <a class="btn btn-outline group-item" th:href="@{/users/users}">Utilisateurs</a>
+          <a class="btn btn-outline group-item" th:href="@{/users/workout}">Activités</a>
           </div>
+          <div class="flex gap-2">
+              <a class="btn btn-outline" th:href="@{/users/login}">Se Connecter</a>
+              <a class="btn btn-outline" th:href="@{/users/create}">Créer un Compte</a>
+          </div>
+        </div>
         </div>
       </section>
     </main>

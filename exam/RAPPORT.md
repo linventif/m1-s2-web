@@ -1,8 +1,21 @@
 # Rapport Exam Grégoire Launay--Bécue
 
+Je n'ais pas eu le temps de faire certaine implémentation, notament certain post & update, mais la structure backend est la.
+
 ## Installation
 
+docker compose up -d
+maven install
+
 ## Endpoints
+
+`[GET] /user/profile` : permet d'afficher le profil de l'utilisateur connecter
+`[GET] /user/workout` : permet de récupérer les activité d'un utilisateur
+`[GET] /user/login` : permet de se connecter
+`[GET] /user/logout` : permet de ce déconnecter
+`[GET] /user/profile` :
+`[GET] /user/profile` :
+`[GET] /user/profile` :
 
 ## Class
 

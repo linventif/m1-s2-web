@@ -9,16 +9,6 @@
 </head>
 <body class="min-h-screen bg-base-200 text-base-content">
     <main class="mx-auto flex min-h-screen w-full max-w-5xl flex-col px-4 py-6 sm:px-6 lg:px-8">
-        <section class="hero mb-6 overflow-hidden rounded-box bg-gradient-to-r from-success to-primary text-slate-950 shadow-xl">
-            <div class="hero-content w-full justify-start px-6 py-8 sm:px-10">
-                <div class="max-w-3xl">
-                    <p class="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-slate-950">Login</p>
-                    <h1 class="text-3xl font-black text-slate-950 sm:text-4xl">Connexion utilisateur</h1>
-                    <p class="mt-3 text-sm text-slate-950 sm:text-base">Connectez-vous avec votre email et votre mot de passe pour acceder a votre espace personnel.</p>
-                </div>
-            </div>
-        </section>
-
         <section class="card border border-base-300 bg-base-100 shadow-xl">
             <div class="card-body p-6 sm:p-8">
                 <div class="alert alert-info" th:if="${message != null}">
@@ -44,11 +34,19 @@
                         <input id="password" class="input input-bordered w-full" name="password" type="password" required>
                     </label>
 
-                    <div class="mt-2 flex flex-wrap gap-3">
-                        <button class="btn btn-primary" type="submit">Se connecter</button>
-                        <a class="btn btn-outline" th:href="@{/users}">Retour au menu</a>
-                        <a class="btn btn-ghost" th:href="@{/users/create}">Creer un compte</a>
-                    </div>
+
+                   <div class="flex gap-10 ">
+          <div class="flex gap-2">
+          <a class="btn btn-outline group-item" th:href="@{/users/profile}">Profil</a>
+          <a class="btn btn-outline group-item" th:href="@{/users/friends}">Amis</a>
+          <a class="btn btn-outline group-item" th:href="@{/users/users}">Utilisateurs</a>
+          <a class="btn btn-outline group-item" th:href="@{/users/workout}">Activités</a>
+          </div>
+          <div class="flex gap-2">
+              <a class="btn btn-outline" th:href="@{/users/login}">Se Connecter</a>
+              <a class="btn btn-outline" th:href="@{/users/create}">Créer un Compte</a>
+          </div>
+        </div>
                 </form>
             </div>
         </section>

@@ -1,5 +1,6 @@
 package utc.miage.tp.user;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -8,7 +9,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import utc.miage.tp.sport.Sport;
 
 @Entity
 @Table(name = "users")
@@ -28,8 +33,40 @@ public class User {
 	@Column(name = "sex", nullable = false)
 	private Sex sex;
 
+	@ManyToOne
+	@JoinColumn(name = "sports")
+	private ArrayList<Sport> sports;
+
+	@ManyToOne
+	@JoinColumn(name = "friends")
+	private ArrayList<User> friends;
+
 	public Double getWeight() {
 		return weight;
+	}
+
+	public ArrayList<Sport> getSports() {
+		return this.sports;
+	}
+
+	public ArrayList<User> getFriends() {
+		return this.friends;
+	}
+
+	public void addFriends(User user) {
+		this.friends.add(user);
+	}
+
+	public void removeFriends(User user) {
+		this.friends.remove(user);
+	}
+
+	public void addSports(Sport sport) {
+		this.sports.add(sport);
+	}
+
+	public void removeSports(Sport sport) {
+		this.sports.remove(sport);
 	}
 
 	public void setWeight(Double weight) {
