@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Participations utilisateur</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="min-h-screen bg-base-200 text-base-content">
+    <main class="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 py-6 sm:px-6 lg:px-8">
+        <section class="hero mb-6 overflow-hidden rounded-box bg-gradient-to-r from-accent to-secondary text-slate-950 shadow-xl">
+            <div class="hero-content w-full justify-start px-6 py-8 sm:px-10">
+                <div class="max-w-3xl">
+                    <p class="mb-3 text-xs font-semibold uppercase tracking-[0.3em] text-slate-950">Resultat</p>
+                    <h1 class="text-3xl font-black text-slate-950 sm:text-4xl">Participations utilisateur</h1>
+                    <p class="mt-3 text-sm text-slate-950 sm:text-base" th:text="${message}">Resultat de la recherche.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card border border-base-300 bg-base-100 shadow-xl">
+            <div class="card-body gap-6 p-6 sm:p-8">
+                <div class="grid gap-3 md:grid-cols-2">
+                    <div class="alert alert-info" th:if="${user != null}">
+                        <span>
+                            Utilisateur :
+                            <strong th:text="${user.name}">Nom</strong>
+                            (<span th:text="${user.email}">email</span>)
+                        </span>
+                    </div>
+
+                    <div class="alert alert-info" th:if="${searchedUserId != null}">
+                        <span>
+                            Identifiant recherche :
+                            <strong th:text="${searchedUserId}">0</strong>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="alert alert-info" th:if="${#lists.isEmpty(conferences)}">
+                    <span>Aucune conference a afficher.</span>
+                </div>
+
+                <div class="overflow-x-auto rounded-box border border-base-300" th:if="${!#lists.isEmpty(conferences)}">
+                    <table class="table table-zebra">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Titre</th>
+                                <th>Edition</th>
+                                <th>Date debut</th>
+                                <th>Date fin</th>
+                                <th>Thematiques</th>
+                                <th>Site web</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="conference : ${conferences}">
+                                <td th:text="${conference.idconf}"></td>
+                                <td class="font-semibold" th:text="${conference.titleconf}"></td>
+                                <td th:text="${conference.nbeditionconf}"></td>
+                                <td th:text="${conference.dtstartconf}"></td>
+                                <td th:text="${conference.dtendconf}"></td>
+                                <td>
+                                    <span class="text-base-content/50" th:if="${#sets.isEmpty(conference.thematiques)}">-</span>
+                                    <ul class="flex flex-wrap gap-2" th:if="${!#sets.isEmpty(conference.thematiques)}">
+                                        <li th:each="thematique : ${conference.thematiques}">
+                                            <span class="badge badge-outline badge-secondary" th:text="${thematique.nomThematique}">Thematique</span>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <span class="text-base-content/50" th:if="${conference.urlwebsiteconf == null || conference.urlwebsiteconf.isBlank()}">-</span>
+                                    <a class="link link-primary break-all"
+                                       th:if="${conference.urlwebsiteconf != null && !conference.urlwebsiteconf.isBlank()}"
+                                       th:href="${conference.urlwebsiteconf}"
+                                       th:text="${conference.urlwebsiteconf}"
+                                       target="_blank"
+                                       rel="noreferrer"></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="flex flex-wrap gap-3">
+                    <a class="btn btn-outline" th:href="@{/users}">Retour au menu</a>
+                    <a class="btn btn-ghost" th:href="@{/users/participations}">Nouvelle recherche</a>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
