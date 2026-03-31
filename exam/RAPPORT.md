@@ -1,11 +1,15 @@
 # Rapport Exam Grégoire Launay--Bécue
 
-Je n'ais pas eu le temps de faire certaine implémentation, notament certain post & update, mais la structure backend est la.
+Je n'ais pas eu le temps de faire certaine implémentation, notament certain post & update, mais la structure backend est la. pas eu le temps nonplus de faire la methéo
 
 ## Installation
 
 docker compose up -d
 maven install
+
+## Diagram de relation
+
+![alt text](image.png)
 
 ## Endpoints
 
@@ -13,9 +17,15 @@ maven install
 `[GET] /user/workout` : permet de récupérer les activité d'un utilisateur
 `[GET] /user/login` : permet de se connecter
 `[GET] /user/logout` : permet de ce déconnecter
-`[GET] /user/profile` :
-`[GET] /user/profile` :
-`[GET] /user/profile` :
+`[POST] /user/profile` : permet de créer le compte
+
+Pas eu le temps d'implémenter
+`[POST] /user/:userID/friends` : demande d'ami
+`[DELETE] /user/:userID/friends` : supression ami
+`[GET] /user/:userID/workout` : voir le workout d'un ami
+`[GET] /user/:userID/profile` : voir le profile
+`[GET] /metheo/:ville` : voir la méthéo d'une ville
+
 
 ## Class
 

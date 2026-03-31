@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import utc.miage.tp.workout.WorkoutService;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/users")
@@ -96,6 +97,30 @@ public class UserController {
 		return "user-login";
 	}
 
+	// @GetMapping("/myfriends")
+	// public String getMethodName(HttpSession session, Model model) {
+	// Object loggedUserId = session.getAttribute("loggedUserId");
+	// if (!(loggedUserId instanceof Long userId)) {
+	// return "redirect:/users/login";
+	// }
+	// return userService.getUserById(userId)
+	// .map(user -> {
+	// model.addAttribute("user", user);
+	// return "user-profile";
+	// })
+	// .orElseGet(() -> {
+	// session.invalidate();
+	// return "redirect:/users/login";
+	// });
+	// }
+
+	// @PostMapping("/friends/add")
+	// public String postMethodName(@RequestBody String entity) {
+	// // TODO: process POST request
+
+	// return entity;
+	// }
+
 	@PostMapping("/login")
 	public String login(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
 		return userService.authenticate(email, password)
@@ -109,6 +134,7 @@ public class UserController {
 					return "user-login";
 				});
 	}
+
 
 	@PostMapping("/logout")
 	public String logout(HttpSession session) {
