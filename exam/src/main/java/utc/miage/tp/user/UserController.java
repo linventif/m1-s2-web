@@ -1,6 +1,5 @@
 package utc.miage.tp.user;
 
-import java.util.Comparator;
 import java.util.List;
 
 import jakarta.servlet.http.HttpSession;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import utc.miage.tp.conference.Conference;
 
 @Controller
 @RequestMapping("/users")
@@ -47,7 +44,6 @@ public class UserController {
 			User createdUser = userService.createUser(user, password, codeStatut, organizedConferenceIds,
 					participatingConferenceIds);
 			model.addAttribute("message", "Utilisateur ajoute avec succes : " + createdUser.getName() + ".");
-			model.addAttribute("users", userService.getAllUsersWithOrganizedConferences());
 			return "user-list";
 		} catch (IllegalArgumentException exception) {
 			populateUserCreationForm(model, user);
@@ -90,33 +86,6 @@ public class UserController {
 		return "user-workout";
 	}
 
-	@GetMapping("/list")
-	public String showUsers(Model model) {
-		model.addAttribute("message", "Liste complete des utilisateurs et des conferences qu'ils organisent.");
-		model.addAttribute("users", userService.getAllUsersWithOrganizedConferences());
-		return "user-list";
-	}
-
-	@GetMapping("/participations")
-	public String showParticipationsForm() {
-		return "user-participations-form";
-	}
-
-	@PostMapping("/participations")
-	public String showParticipations(@RequestParam Long id, Model model) {
-		return userService.getUserById(id).map(user -> {
-			model.addAttribute("message", "Liste des conferences auxquelles " + user.getName() + " participe.");
-			model.addAttribute("user", user);
-			model.addAttribute("conferences", userService.getParticipatingConferencesByUserId(id).orElse(List.of()));
-			return "user-participations";
-		}).orElseGet(() -> {
-			model.addAttribute("message", "Aucun utilisateur trouve avec l'identifiant " + id + ".");
-			model.addAttribute("searchedUserId", id);
-			model.addAttribute("conferences", List.of());
-			return "user-participations";
-		});
-	}
-
 	@GetMapping("/login")
 	public String showLoginForm(@RequestParam(name = "message", required = false) String message, Model model) {
 		model.addAttribute("message", message);
@@ -137,32 +106,6 @@ public class UserController {
 				});
 	}
 
-	@GetMapping("/me")
-	public String showLoggedUserDashboard(HttpSession session, Model model) {
-		Object loggedUserId = session.getAttribute("loggedUserId");
-		if (!(loggedUserId instanceof Long userId)) {
-			return "redirect:/users/login";
-		}
-
-		return userService.getUserById(userId)
-				.map(user -> {
-					model.addAttribute("user", user);
-					model.addAttribute("organizedConferences",
-							user.getOrganizedConferences().stream()
-									.sorted(Comparator.comparing(Conference::getIdconf, Comparator.nullsLast(Long::compareTo)))
-									.toList());
-					model.addAttribute("participatingConferences",
-							user.getParticipatingConferences().stream().sorted(
-									Comparator.comparing(Conference::getIdconf, Comparator.nullsLast(Long::compareTo)))
-									.toList());
-					return "user-dashboard";
-				})
-				.orElseGet(() -> {
-					session.invalidate();
-					return "redirect:/users/login";
-				});
-	}
-
 	@PostMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
@@ -171,7 +114,5 @@ public class UserController {
 
 	private void populateUserCreationForm(Model model, User user) {
 		model.addAttribute("user", user);
-		model.addAttribute("conferences", userService.getAllConferences());
-		model.addAttribute("statuts", userService.getAllStatuts());
 	}
 }

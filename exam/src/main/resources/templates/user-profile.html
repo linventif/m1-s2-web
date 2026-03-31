@@ -23,6 +23,13 @@
         </section>
       <section class="card border border-base-300 bg-base-100 shadow-xl">
         <div class="card-body gap-6 p-6 sm:p-8">
+          <h3 class="text-xl">
+            Informations
+          </h3>
+            <p>
+              Nom:
+              <i class="" th:text="${user.name}">cm</i>
+            </p>
             <p>
               Taille:
               <i class="" th:text="${user.height}">cm</i>
@@ -36,7 +43,10 @@
             <p>
               Sexe:
               <i class="" th:text="${user.sex}">sexe</i>
-              kg
+            </p>
+            <p>
+              Sport:
+              <i class="" th:text="${user.sex}">sexe</i>
             </p>
         </div>
         <div class="card-body gap-6 p-6 sm:p-8">

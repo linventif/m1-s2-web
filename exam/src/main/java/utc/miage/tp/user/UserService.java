@@ -12,24 +12,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
-import utc.miage.tp.conference.Conference;
-import utc.miage.tp.conference.ConferenceRepository;
-import utc.miage.tp.statut.Statut;
-import utc.miage.tp.statut.StatutRepository;
-
 @Service
 public class UserService {
 
 	private final UserRepository userRepository;
-	private final ConferenceRepository conferenceRepository;
-	private final StatutRepository statutRepository;
 	private final PasswordEncoder passwordEncoder;
 
-	public UserService(UserRepository userRepository, ConferenceRepository conferenceRepository,
-			StatutRepository statutRepository, PasswordEncoder passwordEncoder) {
+	public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
-		this.conferenceRepository = conferenceRepository;
-		this.statutRepository = statutRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
 
@@ -41,41 +31,9 @@ public class UserService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<User> getAllUsersWithOrganizedConferences() {
-		List<User> users = userRepository.findAll(Sort.by(Sort.Direction.ASC, "id"));
-		users.forEach(user -> {
-			user.getOrganizedConferences().size();
-			user.getParticipatingConferences().size();
-		});
-		return users;
-	}
-
-	@Transactional(readOnly = true)
 	public Optional<User> getUserById(Long id) {
 		return userRepository.findById(id).map(user -> {
-			user.getStatut().getNomStatut();
-			user.getOrganizedConferences().size();
-			user.getOrganizedConferences().forEach(conference -> conference.getThematiques().size());
-			user.getParticipatingConferences().size();
-			user.getParticipatingConferences().forEach(conference -> conference.getThematiques().size());
 			return user;
-		});
-	}
-
-	@Transactional(readOnly = true)
-	public List<Conference> getAllConferences() {
-		List<Conference> conferences = conferenceRepository.findAll(Sort.by(Sort.Direction.ASC, "idconf"));
-		conferences.forEach(conference -> conference.getThematiques().size());
-		return conferences;
-	}
-
-	@Transactional(readOnly = true)
-	public Optional<List<Conference>> getParticipatingConferencesByUserId(Long userId) {
-		return userRepository.findById(userId).map(user -> {
-			user.getParticipatingConferences().forEach(conference -> conference.getThematiques().size());
-			return user.getParticipatingConferences().stream()
-					.sorted(Comparator.comparing(Conference::getIdconf, Comparator.nullsLast(Long::compareTo)))
-					.toList();
 		});
 	}
 
@@ -87,30 +45,15 @@ public class UserService {
 			throw new IllegalArgumentException("Un utilisateur avec cet email existe deja.");
 		}
 
-		Statut statut = statutRepository.findById(codeStatut)
-				.orElseThrow(() -> new IllegalArgumentException("Le statut selectionne est invalide."));
-
 		User newUser = new User(user.getName(), normalizedEmail, user.getWeight(), user.getHeight(), user.getSex());
 		newUser.setPassword(passwordEncoder.encode(rawPassword));
 		newUser.setStatut(statut);
 
 		User savedUser = userRepository.save(newUser);
 
-		for (Conference conference : getConferencesByIds(organizedConferenceIds)) {
-			savedUser.addOrganizedConference(conference);
-		}
-
-		for (Conference conference : getConferencesByIds(participatingConferenceIds)) {
-			savedUser.addParticipatingConference(conference);
-		}
-
 		return userRepository.save(savedUser);
 	}
 
-	@Transactional(readOnly = true)
-	public List<Statut> getAllStatuts() {
-		return statutRepository.findAll(Sort.by(Sort.Direction.ASC, "nomStatut"));
-	}
 
 	@Transactional(readOnly = true)
 	public Optional<User> authenticate(String email, String rawPassword) {
@@ -118,21 +61,10 @@ public class UserService {
 		return userRepository.findByEmail(normalizedEmail)
 				.filter(user -> passwordEncoder.matches(rawPassword, user.getPassword()))
 				.map(user -> {
-					user.getStatut().getNomStatut();
-					user.getOrganizedConferences().size();
-					user.getOrganizedConferences().forEach(conference -> conference.getThematiques().size());
-					user.getParticipatingConferences().size();
-					user.getParticipatingConferences().forEach(conference -> conference.getThematiques().size());
 					return user;
 				});
 	}
 
-	private Set<Conference> getConferencesByIds(Collection<Long> conferenceIds) {
-		if (conferenceIds == null || conferenceIds.isEmpty()) {
-			return Set.of();
-		}
-		return new LinkedHashSet<>(conferenceRepository.findAllById(conferenceIds));
-	}
 
 	private String normalizeEmail(String email) {
 		if (email == null) {

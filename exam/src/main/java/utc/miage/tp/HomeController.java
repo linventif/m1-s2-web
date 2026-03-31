@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
 
 	@GetMapping("/")
-	public String redirectToConferenceMenu() {
-		return "redirect:/conferences";
+	public String redirectToProfile() {
+		return "redirect:/users/profile";
 	}
 }
