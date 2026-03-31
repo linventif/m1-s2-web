@@ -47,7 +47,6 @@ public class UserService {
 
 		User newUser = new User(user.getName(), normalizedEmail, user.getWeight(), user.getHeight(), user.getSex());
 		newUser.setPassword(passwordEncoder.encode(rawPassword));
-		newUser.setStatut(statut);
 
 		User savedUser = userRepository.save(newUser);
 
