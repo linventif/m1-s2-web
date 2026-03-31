@@ -58,6 +58,10 @@ public class Workout {
     this.user = user;
   }
 
+  public Workout() {
+
+  }
+
   public Workout(LocalDate date, Double distance, Double duration, Sport sport, User user) {
     this.date = date;
     this.distance = distance;
@@ -68,6 +72,10 @@ public class Workout {
 
   public Long getId() {
     return id;
+  }
+
+  public Double getCalorieBurn() {
+    return (this.duration / 60) * this.sport.getCaloryPerMinutes();
   }
 
   public LocalDate getDate() {

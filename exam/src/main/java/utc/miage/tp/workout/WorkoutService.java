@@ -26,7 +26,7 @@ public class WorkoutService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<Workout> getAllStatuts() {
+	public List<Workout> getAllWorkout() {
 		return workoutRepository.findAll();
 	}
 

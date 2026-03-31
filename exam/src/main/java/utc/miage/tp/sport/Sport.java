@@ -21,6 +21,9 @@ public class Sport {
   @Column(name = "calPerMin", nullable = false)
   private Double calPerMin;
 
+  public Sport() {
+
+  }
   public Sport(String name, Double calPerMin) {
     this.name = name;
     this.calPerMin = calPerMin;

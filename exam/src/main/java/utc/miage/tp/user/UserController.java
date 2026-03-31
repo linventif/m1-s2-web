@@ -11,15 +11,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import utc.miage.tp.workout.WorkoutService;
 
 @Controller
 @RequestMapping("/users")
 public class UserController {
 
+	private final WorkoutService workoutService;
 	private final UserService userService;
 
-	public UserController(UserService userService) {
+	public UserController(UserService userService, WorkoutService workoutService) {
 		this.userService = userService;
+		this.workoutService = workoutService;
 	}
 
 	@GetMapping({ "", "/" })
@@ -82,7 +85,8 @@ public class UserController {
 	}
 
 	@GetMapping("/workout")
-	public String showWorkout() {
+	public String showWorkout(Model model) {
+		model.addAttribute("workout", workoutService.getAllWorkout());
 		return "user-workout";
 	}
 
