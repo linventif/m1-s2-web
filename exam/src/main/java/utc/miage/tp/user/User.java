@@ -26,6 +26,28 @@ public class User {
 	@Column(name = "id")
 	private Long id;
 
+	@Column(name = "weight", nullable = false)
+	private Double weight;
+
+	@Column(name = "height", nullable = false)
+	private Double height;
+
+	public Double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Double weight) {
+		this.weight = weight;
+	}
+
+	public Double getHeight() {
+		return height;
+	}
+
+	public void setHeight(Double height) {
+		this.height = height;
+	}
+
 	@Column(name = "name", nullable = false)
 	private String name;
 
@@ -49,9 +71,11 @@ public class User {
 	public User() {
 	}
 
-	public User(String name, String email) {
+	public User(String name, String email, Double weight, Double height) {
 		this.name = name;
 		this.email = email;
+		this.weight = weight;
+		this.height = height;
 	}
 
 	public Long getId() {

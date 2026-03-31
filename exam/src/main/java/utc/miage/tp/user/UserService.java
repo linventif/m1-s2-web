@@ -83,7 +83,7 @@ public class UserService {
 		Statut statut = statutRepository.findById(codeStatut)
 				.orElseThrow(() -> new IllegalArgumentException("Le statut selectionne est invalide."));
 
-		User newUser = new User(user.getName(), normalizedEmail);
+		User newUser = new User(user.getName(), normalizedEmail, user.getWeight(), user.getHeight());
 		newUser.setPassword(passwordEncoder.encode(rawPassword));
 		newUser.setStatut(statut);
 

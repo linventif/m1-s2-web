@@ -17,7 +17,7 @@ public class SportService {
 
 	@Transactional
 	public Sport createSport(Sport sport) {
-		Sport newSport = new Sport(sport.getName());
+		Sport newSport = new Sport(sport.getName(), sport.getCaloryPerMinutes());
 
 		Sport savedSport = sportRepository.save(newSport);
 

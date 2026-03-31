@@ -93,31 +93,19 @@ public class ReferenceDataInitializer implements CommandLineRunner {
 		}
 
 		List<User> users = List.of(
-				createUser("Alice Martin", "alice.martin@demo.local", statuts.get("CHERCHEUR")),
-				createUser("Benoit Leroy", "benoit.leroy@demo.local", statuts.get("INDUSTRIEL")),
-				createUser("Claire Dubois", "claire.dubois@demo.local", statuts.get("ETUDIANT")),
-				createUser("David Morel", "david.morel@demo.local", statuts.get("CHERCHEUR")),
-				createUser("Emma Petit", "emma.petit@demo.local", statuts.get("ETUDIANT")),
-				createUser("Farid Haddad", "farid.haddad@demo.local", statuts.get("INDUSTRIEL")),
-				createUser("Giulia Rossi", "giulia.rossi@demo.local", statuts.get("CHERCHEUR")),
-				createUser("Hugo Bernard", "hugo.bernard@demo.local", statuts.get("ETUDIANT")),
-				createUser("Ines Laurent", "ines.laurent@demo.local", statuts.get("ETUDIANT")),
-				createUser("Jules Fontaine", "jules.fontaine@demo.local", statuts.get("INDUSTRIEL")),
-				createUser("Karim Saidi", "karim.saidi@demo.local", statuts.get("CHERCHEUR")),
-				createUser("Lea Garnier", "lea.garnier@demo.local", statuts.get("ETUDIANT")),
-				createUser("Maya Chevalier", "maya.chevalier@demo.local", statuts.get("CHERCHEUR")),
-				createUser("Nora Benali", "nora.benali@demo.local", statuts.get("INDUSTRIEL")),
-				createUser("Owen Mercier", "owen.mercier@demo.local", statuts.get("ETUDIANT")));
+				createUser("Alice Martin", "alice.martin@demo.local", statuts.get("CHERCHEUR"), 65.5, 165.0),
+				createUser("Benoit Leroy", "benoit.leroy@demo.local", statuts.get("INDUSTRIEL"), 75.5, 180.0),
+				createUser("Owen Mercier", "owen.mercier@demo.local", statuts.get("ETUDIANT"), 85.0, 185.0));
 
 		userRepository.saveAll(users);
 
 		List<Sport> sports = List.of(
-				createSport("Climbing - Speed"),
-				createSport("Climbing - Booldering"),
-				createSport("Running"),
-				createSport("Natation - 400M"),
-				createSport("Skydiving"),
-				createSport("Diving"));
+				createSport("Climbing - Speed", 3.0),
+				createSport("Climbing - Booldering", 2.0),
+				createSport("Running", 2.0),
+				createSport("Natation - 400M", 3.0),
+				createSport("Skydiving", 2.0),
+				createSport("Diving", 2.0));
 
 		sportRepository.saveAll(sports);
 
@@ -159,12 +147,12 @@ public class ReferenceDataInitializer implements CommandLineRunner {
 		userRepository.saveAll(users);
 	}
 
-	private Sport createSport(String name) {
-		return new Sport(name);
+	private Sport createSport(String name, Double calPerMin) {
+		return new Sport(name, calPerMin);
 	}
 
-	private User createUser(String name, String email, Statut statut) {
-		User user = new User(name, email);
+	private User createUser(String name, String email, Statut statut, Double weight, Double height) {
+		User user = new User(name, email, weight, height);
 		user.setStatut(statut);
 		user.setPassword(passwordEncoder.encode("demo123"));
 		return user;
