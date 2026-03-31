@@ -97,7 +97,7 @@ public class UserController {
 		return userService.authenticate(email, password)
 				.map(user -> {
 					session.setAttribute("loggedUserId", user.getId());
-					return "redirect:/users/me";
+					return "redirect:/users/profile";
 				})
 				.orElseGet(() -> {
 					model.addAttribute("errorMessage", "Email ou mot de passe incorrect.");

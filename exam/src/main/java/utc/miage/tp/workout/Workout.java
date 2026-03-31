@@ -1,6 +1,7 @@
 package utc.miage.tp.workout;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Date;
 
 import org.hibernate.annotations.ColumnDefault;
 
@@ -25,7 +26,7 @@ public class Workout {
 
   @Column(name = "date", nullable = false)
   @ColumnDefault("current_date")
-  private Date date;
+  private LocalDate date;
 
   @Column(name = "distance", nullable = false)
   private Double distance;
@@ -57,7 +58,7 @@ public class Workout {
     this.user = user;
   }
 
-  public Workout(Date date, Double distance, Double duration, Sport sport, User user) {
+  public Workout(LocalDate date, Double distance, Double duration, Sport sport, User user) {
     this.date = date;
     this.distance = distance;
     this.duration = duration;
@@ -69,7 +70,7 @@ public class Workout {
     return id;
   }
 
-  public Date getDate() {
+  public LocalDate getDate() {
     return date;
   }
 
@@ -85,7 +86,7 @@ public class Workout {
     this.id = id;
   }
 
-  public void setDate(Date date) {
+  public void setDate(LocalDate date) {
     this.date = date;
   }
 

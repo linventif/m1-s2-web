@@ -1,7 +1,10 @@
 package utc.miage.tp.config;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
+import org.hibernate.boot.registry.classloading.spi.ClassLoaderService.Work;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -12,19 +15,23 @@ import utc.miage.tp.sport.SportRepository;
 import utc.miage.tp.user.Sex;
 import utc.miage.tp.user.User;
 import utc.miage.tp.user.UserRepository;
+import utc.miage.tp.workout.Workout;
+import utc.miage.tp.workout.WorkoutRepository;
 
 @Component
 public class ReferenceDataInitializer implements CommandLineRunner {
 
+	private final WorkoutRepository workoutRepository;
 	private final UserRepository userRepository;
 	private final SportRepository sportRepository;
 	private final PasswordEncoder passwordEncoder;
 
 	public ReferenceDataInitializer(UserRepository userRepository,
-			SportRepository sportRepository, PasswordEncoder passwordEncoder) {
+			SportRepository sportRepository, PasswordEncoder passwordEncoder, WorkoutRepository workoutRepository) {
 		this.userRepository = userRepository;
 		this.sportRepository = sportRepository;
 		this.passwordEncoder = passwordEncoder;
+		this.workoutRepository = workoutRepository;
 	}
 
 	@Override
@@ -45,12 +52,22 @@ public class ReferenceDataInitializer implements CommandLineRunner {
 				createSport("Climbing - Speed", 3.0),
 				createSport("Climbing - Booldering", 2.0),
 				createSport("Running", 2.0),
-				createSport("Natation - 400M", 3.0),
-				createSport("Skydiving", 2.0),
+				createSport("Natation", 3.0),
+												createSport("Skydiving", 2.0),
 				createSport("Diving", 2.0));
 
 		sportRepository.saveAll(sports);
 
+		List<Workout> workouts = List.of(
+				createWorkout(LocalDate.of(2026, 3, 31), 1.0, 30.0, sports.get(3), users.get(1)),
+				createWorkout(LocalDate.of(2026, 3, 30), 1.0, 30.0, sports.get(3), users.get(1)),
+				createWorkout(LocalDate.of(2026, 3, 29), 1.0, 30.0, sports.get(3), users.get(1)));
+
+		workoutRepository.saveAll(workouts);
+	}
+
+	private Workout createWorkout(LocalDate date, Double distance, Double duration, Sport sport, User user) {
+		return new Workout(date, distance, duration, sport, user);
 	}
 
 	private Sport createSport(String name, Double calPerMin) {
