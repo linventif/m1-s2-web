@@ -59,9 +59,12 @@ public class ReferenceDataInitializer implements CommandLineRunner {
 		sportRepository.saveAll(sports);
 
 		List<Workout> workouts = List.of(
-				createWorkout(LocalDate.of(2026, 3, 31), 1.0, 30.0, sports.get(3), users.get(1)),
-				createWorkout(LocalDate.of(2026, 3, 30), 1.0, 30.0, sports.get(3), users.get(1)),
-				createWorkout(LocalDate.of(2026, 3, 29), 1.0, 30.0, sports.get(3), users.get(1)));
+				createWorkout(LocalDate.of(2026, 3, 31), 1.0, 30.0, sports.get(3),
+						users.get(1)),
+				createWorkout(LocalDate.of(2026, 3, 30), 1.0, 30.0, sports.get(3),
+						users.get(1)),
+				createWorkout(LocalDate.of(2026, 3, 29), 1.0, 30.0, sports.get(3),
+						users.get(1)));
 
 		workoutRepository.saveAll(workouts);
 	}

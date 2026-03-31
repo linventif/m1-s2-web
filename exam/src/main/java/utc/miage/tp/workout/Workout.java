@@ -39,7 +39,7 @@ public class Workout {
   private Sport sport;
 
   @ManyToOne
-  @JoinColumn(name = "user", nullable = false)
+  @JoinColumn(name = "userX", nullable = false)
   private User user;
 
   public Sport getSport() {
