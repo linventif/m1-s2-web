@@ -32,6 +32,9 @@ public class User {
 	@Column(name = "height", nullable = false)
 	private Double height;
 
+	@Column(name = "sex", nullable = false)
+	private Boolean sex;
+
 	public Double getWeight() {
 		return weight;
 	}
@@ -71,11 +74,12 @@ public class User {
 	public User() {
 	}
 
-	public User(String name, String email, Double weight, Double height) {
+	public User(String name, String email, Double weight, Double height, Boolean sex) {
 		this.name = name;
 		this.email = email;
 		this.weight = weight;
 		this.height = height;
+		this.sex = sex;
 	}
 
 	public Long getId() {
@@ -154,5 +158,13 @@ public class User {
 			return;
 		}
 		conference.getParticipants().remove(this);
+	}
+
+	public Boolean getSex() {
+		return sex;
+	}
+
+	public void setSex(Boolean sex) {
+		this.sex = sex;
 	}
 }

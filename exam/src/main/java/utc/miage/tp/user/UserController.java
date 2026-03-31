@@ -57,15 +57,32 @@ public class UserController {
 	}
 
 	@GetMapping("/profile")
-	public String showProfile(Model model) {
-		model.addAttribute("user", userService.getAllUser());
-		return "user-profile";
+	public String showProfile(HttpSession session, Model model) {
+		Object loggedUserId = session.getAttribute("loggedUserId");
+		if (!(loggedUserId instanceof Long userId)) {
+			return "redirect:/users/login";
+		}
+		return userService.getUserById(userId)
+				.map(user -> {
+					model.addAttribute("user", user);
+					return "user-profile";
+				})
+				.orElseGet(() -> {
+					session.invalidate();
+					return "redirect:/users/login";
+				});
 	}
 
 	@GetMapping("/users")
 	public String showAllUsers(Model model) {
 		model.addAttribute("users", userService.getAllUser());
 		return "user-users";
+	}
+
+	@GetMapping("/friends")
+	public String showAllFriends(Model model) {
+		model.addAttribute("users", userService.getAllUser());
+		return "user-friends";
 	}
 
 	@GetMapping("/workout")

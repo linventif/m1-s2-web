@@ -93,9 +93,9 @@ public class ReferenceDataInitializer implements CommandLineRunner {
 		}
 
 		List<User> users = List.of(
-				createUser("Alice Martin", "alice.martin@demo.local", statuts.get("CHERCHEUR"), 65.5, 165.0),
-				createUser("Benoit Leroy", "benoit.leroy@demo.local", statuts.get("INDUSTRIEL"), 75.5, 180.0),
-				createUser("Owen Mercier", "owen.mercier@demo.local", statuts.get("ETUDIANT"), 85.0, 185.0));
+				createUser("Alice Martin", "alice.martin@demo.local", statuts.get("CHERCHEUR"), 65.5, 165.0, false),
+				createUser("Benoit Leroy", "benoit.leroy@demo.local", statuts.get("INDUSTRIEL"), 75.5, 180.0, true),
+				createUser("Owen Mercier", "owen.mercier@demo.local", statuts.get("ETUDIANT"), 85.0, 185.0, true));
 
 		userRepository.saveAll(users);
 
@@ -127,8 +127,8 @@ public class ReferenceDataInitializer implements CommandLineRunner {
 		return new Sport(name, calPerMin);
 	}
 
-	private User createUser(String name, String email, Statut statut, Double weight, Double height) {
-		User user = new User(name, email, weight, height);
+	private User createUser(String name, String email, Statut statut, Double weight, Double height, Boolean sex) {
+		User user = new User(name, email, weight, height, sex);
 		user.setStatut(statut);
 		user.setPassword(passwordEncoder.encode("demo123"));
 		return user;
