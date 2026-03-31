@@ -14,12 +14,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import utc.miage.tp.conference.Conference;
 import utc.miage.tp.conference.ConferenceRepository;
+import utc.miage.tp.sport.Sport;
+import utc.miage.tp.sport.SportRepository;
 import utc.miage.tp.statut.Statut;
 import utc.miage.tp.statut.StatutRepository;
 import utc.miage.tp.thematique.Thematique;
 import utc.miage.tp.thematique.ThematiqueRepository;
 import utc.miage.tp.user.User;
 import utc.miage.tp.user.UserRepository;
+import utc.miage.tp.workout.WorkoutRepository;
 
 @Component
 public class ReferenceDataInitializer implements CommandLineRunner {
@@ -28,14 +31,19 @@ public class ReferenceDataInitializer implements CommandLineRunner {
 	private final ThematiqueRepository thematiqueRepository;
 	private final ConferenceRepository conferenceRepository;
 	private final UserRepository userRepository;
+	private final SportRepository sportRepository;
+	private final WorkoutRepository workoutRepository;
 	private final PasswordEncoder passwordEncoder;
 
 	public ReferenceDataInitializer(StatutRepository statutRepository, ThematiqueRepository thematiqueRepository,
-			ConferenceRepository conferenceRepository, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+			ConferenceRepository conferenceRepository, UserRepository userRepository,
+			SportRepository sportRepository, WorkoutRepository workoutRepository, PasswordEncoder passwordEncoder) {
 		this.statutRepository = statutRepository;
 		this.thematiqueRepository = thematiqueRepository;
 		this.conferenceRepository = conferenceRepository;
 		this.userRepository = userRepository;
+		this.sportRepository = sportRepository;
+		this.workoutRepository = workoutRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
 
@@ -103,6 +111,16 @@ public class ReferenceDataInitializer implements CommandLineRunner {
 
 		userRepository.saveAll(users);
 
+		List<Sport> sports = List.of(
+				createSport("Climbing - Speed"),
+				createSport("Climbing - Booldering"),
+				createSport("Running"),
+				createSport("Natation - 400M"),
+				createSport("Skydiving"),
+				createSport("Diving"));
+
+		sportRepository.saveAll(sports);
+
 		List<Conference> conferences = List.of(
 				createConference("Paris AI Summit", 2026, LocalDate.of(2026, 4, 10), LocalDate.of(2026, 4, 12),
 						"https://paris-ai.demo.local", users.get(0), thematiques, "IA", "Data Engineering"),
@@ -139,6 +157,10 @@ public class ReferenceDataInitializer implements CommandLineRunner {
 		registerParticipants(conferences.get(9), users.get(1), users.get(2), users.get(8), users.get(11), users.get(12));
 
 		userRepository.saveAll(users);
+	}
+
+	private Sport createSport(String name) {
+		return new Sport(name);
 	}
 
 	private User createUser(String name, String email, Statut statut) {
